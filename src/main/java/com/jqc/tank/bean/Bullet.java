@@ -112,7 +112,6 @@ public class Bullet {
     public void collisionWidth(Tank tank) {
         if(this.group == tank.getGroup()) return;
 
-        //TODO:用一个rect来记录子弹或坦克的位置
         Rectangle tankRect = tank.getRectangle();
         Rectangle bulletRect = this.getRectangle();
         tankRect.setRect(tank.getX(), tank.getY(),Tank.WIDTH,Tank.HEIGHT);

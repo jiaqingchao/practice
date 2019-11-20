@@ -23,7 +23,7 @@
 3.敌人坦克随机动，随机发射子弹（已完成）
 4.边界检测（已完成）
 
-//TODO:用一个Rectangle来记录子弹或坦克的位置
+//用一个Rectangle来记录子弹或坦克的位置
 Rectangle rect1 = new Rectangle(tank.getX(), tank.getY(),Tank.WIDTH,Tank.HEIGHT);
 Rectangle rect2 = new Rectangle(this.x, this.y,Bullet.WIDTH,Bullet.HEIGHT);
 
