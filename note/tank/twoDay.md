@@ -26,14 +26,14 @@
         我是给设置增加坦克的子弹的数量，然后判断子弹数量去画图，没有实现，思路都是错了
 
 
-清除子弹时使用forEach循环，中间remove对象，报 java.util.ConcurrentModificationException
+清除子弹时使用forEach循环，中间remove对象， 抛java.util.ConcurrentModificationException
  
-    ListIterator<Bullet> iterator = bulletList.listIterator();
+    ListIterator<Bullet> iterator = bullets.listIterator();
     while(iterator.hasNext()){
         Bullet bullet = iterator.next();
         bullet.paint(g);
 
-        if(!bullet.isLive()) iterator.remove();
+        if(!bullet.isLiving()) iterator.remove();
 
     }
     
@@ -41,4 +41,8 @@
 
 new tank 放在坦克List
 可以打子弹，（2s一个/先不可以打）
+
+
+
+使用线程自动敌方坦克，iterator.next() 抛java.util.ConcurrentModificationException
 

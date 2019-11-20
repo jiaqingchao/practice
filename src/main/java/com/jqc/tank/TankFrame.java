@@ -1,10 +1,11 @@
 package com.jqc.tank;
 
+import com.jqc.tank.bean.Explode;
 import com.jqc.tank.bean.Bullet;
 import com.jqc.tank.bean.Tank;
 import com.jqc.tank.common.CONSTANTS;
 import com.jqc.tank.common.Dir;
-import com.jqc.tank.common.TankType;
+import com.jqc.tank.common.Group;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -17,11 +18,12 @@ import java.util.ListIterator;
 
 public class TankFrame extends Frame {
 
-    public List<Tank> tankList = new ArrayList<>();
+    public List<Tank> tanks = new ArrayList<>();
+    public List<Bullet> bullets = new ArrayList<>();
+    public List<Explode> Explodes = new ArrayList<>();
 
-    public List<Bullet> bulletList = new ArrayList<>();
-
-    public Tank myTank = new Tank(50,50, Dir.DOWN,this, TankType.PLAYER);
+    public Tank redTank = new Tank(100,100,Dir.DOWN, Group.RED, this);
+    public Tank blueTank;
 
     public TankFrame() throws Exception {
 
@@ -39,58 +41,8 @@ public class TankFrame extends Frame {
             }
         });
 
-        autoAddEnemy();
+//        autoAddEnemy();
 
-    }
-
-    private void autoAddEnemy(){
-        new Thread(()->{
-            boolean addEnemy = true;
-            long startTime = System.currentTimeMillis();
-            while (myTank != null){
-
-                if(tankList.size() >= 4) addEnemy = false;
-                else addEnemy = true;
-
-                if(addEnemy == false || System.currentTimeMillis() - startTime < 2000){
-                    continue;
-                }
-                startTime = System.currentTimeMillis();
-
-                int x = tankList.size() * 120;
-                int y = tankList.size() * 100;
-                Dir dir = Dir.DOWN;
-                switch (tankList.size()){
-                    case 0:
-                        x = 50;
-                        y = 500;
-                        dir = Dir.UP;
-                        break;
-                    case 1:
-                        x = 700;
-                        y = 50;
-                        dir = Dir.LEFT;
-                        break;
-                    case 2:
-                        x = 700;
-                        y = 500;
-                        dir = Dir.LEFT;
-                        break;
-                    case 3:
-                        x = 400;
-                        y = 300;
-                        dir = Dir.RIGHT;
-                        break;
-                    default:
-                        break;
-
-                }
-
-                Tank enemyTank = new Tank(x,y,dir,this);
-                tankList.add(enemyTank);
-
-            }
-        }).start();
     }
 
 //  处理双缓冲，解决闪烁问题
@@ -113,37 +65,50 @@ public class TankFrame extends Frame {
     public void paint(Graphics g){
         Color c = g.getColor();
         g.setColor(Color.WHITE);
-        g.drawString("敌方坦克的数量：" + tankList.size(), 10, 60);
+        g.drawString("敌方坦克的数量：" + tanks.size(), 10, 50);
+        g.drawString("子弹的数量：" + bullets.size(), 10, 70);
+        g.drawString("爆炸的数量：" + Explodes.size(), 10, 90);
         g.setColor(c);
-        if(myTank == null){
 
+        if(!redTank.isLiving()){
             c = g.getColor();
             g.setColor(Color.WHITE);
             g.drawString("GAME OVER", CONSTANTS.WINDOW_WIDTH / 2 - 50, CONSTANTS.WINDOW_HEIGHT / 2 - 10);
-
             g.setColor(c);
+            bullets.removeAll(bullets);
+            tanks.removeAll(tanks);
             return;
         }
 
-        myTank.paint(g);
+        redTank.paint(g);
 
-        ListIterator<Bullet> bullIterator = bulletList.listIterator();
-        while(bullIterator.hasNext()){
-            Bullet bullet = bullIterator.next();
-            bullet.paint(g);
-
-            if(!bullet.isLive()) bullIterator.remove();
-
+        for(ListIterator<Explode> blastIterator = Explodes.listIterator(); blastIterator.hasNext();){
+            Explode explode = blastIterator.next();
+            explode.paint(g);
+            if(!explode.isLiving()) blastIterator.remove();
         }
 
-        ListIterator<Tank> tankListIterator = tankList.listIterator();
-        while(tankListIterator.hasNext()){
+        for(ListIterator<Bullet> bulletIterator = bullets.listIterator();bulletIterator.hasNext();){
+            Bullet bullet = bulletIterator.next();
+            bullet.paint(g);
+            if(!bullet.isLiving()) bulletIterator.remove();
+        }
+
+        for(ListIterator<Tank> tankListIterator = tanks.listIterator();tankListIterator.hasNext();){
             Tank tank = tankListIterator.next();
             tank.paint(g);
+            if(!tank.isLiving()) tankListIterator.remove(); // ConcurrentModificationException   //异步新增tank,数量对不上，导致报错
+        }
 
-            if(!tank.isLive()) tankListIterator.remove(); // ConcurrentModificationException   //异步新增tank,数量对不上，导致报错
+        for(ListIterator<Bullet> bulletIterator = bullets.listIterator();bulletIterator.hasNext();){
+            Bullet bullet = bulletIterator.next();
+            bullet.collisionWidth(redTank);
+            for(ListIterator<Tank> tankListIterator = tanks.listIterator();tankListIterator.hasNext();){
+                bullet.collisionWidth(tankListIterator.next());
+            }
 
         }
+
 
     }
 
@@ -173,7 +138,7 @@ public class TankFrame extends Frame {
                 default:
                     break;
             }
-            setMainTankDir(myTank);
+            setMainTankDir(redTank);
         }
 
         @Override
@@ -193,11 +158,11 @@ public class TankFrame extends Frame {
                     bD = false;
                     break;
                 case KeyEvent.VK_SPACE:
-                    myTank.fire();
+                    redTank.fire();
                 default:
                     break;
             }
-            setMainTankDir(myTank);
+            setMainTankDir(redTank);
         }
 
         private void setMainTankDir(Tank tank){
@@ -210,6 +175,5 @@ public class TankFrame extends Frame {
             if(bD) tank.setDir(Dir.DOWN);
         }
     }
-
 
 }

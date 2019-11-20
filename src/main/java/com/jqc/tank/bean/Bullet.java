@@ -1,139 +1,126 @@
 package com.jqc.tank.bean;
 
 import com.jqc.tank.TankFrame;
-import com.jqc.tank.common.BulletType;
 import com.jqc.tank.common.CONSTANTS;
 import com.jqc.tank.common.Dir;
+import com.jqc.tank.common.Group;
+import com.jqc.tank.common.ResourceMgr;
 
 import java.awt.*;
-import java.util.ListIterator;
 
 public class Bullet {
 
     private int x;
     private int y;
-    private int speed;
+    private int speed = CONSTANTS.BULLET_SPEED_10;
     private Dir dir;
 
-    private boolean live = true;
+    public static int WIDTH = ResourceMgr.bulletU.getWidth();
+    public static int HEIGHT = ResourceMgr.bulletU.getHeight();
+
+    private boolean living = true;
     private TankFrame tf;
 
-    private BulletType type;
+    private Group group;
     private int power;
     private int size;
 
-    public Bullet(int x, int y, Dir dir, TankFrame tf) {
+    private Rectangle rectangle;
+
+    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tf = tf;
-
-        this.type = BulletType.NORMAL;
-        this.power = type.getPower();
-        this.size = type.getPower();
-        this.speed = type.getSpeed();
     }
 
-    public Bullet(int x,int y, Dir dir, BulletType type) {
+    public boolean isLiving() {
+        return living;
+    }
+
+    private void die() {
+        this.living = false;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
         this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
         this.y = y;
-        this.dir = dir;
-        this.type = type;
-        this.power = type.getPower();
-        this.size = type.getPower();
-        this.speed = type.getSpeed();
     }
 
-    public Dir getDir() {
-        return dir;
-    }
-
-    public void setDir(Dir dir) {
-        this.dir = dir;
-    }
-
-    public boolean isLive() {
-        return live;
+    public Rectangle getRectangle() {
+        if(rectangle == null){
+            rectangle = new Rectangle();
+        }
+        return rectangle;
     }
 
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x, y, CONSTANTS.BULLET_SIZE_10, CONSTANTS.BULLET_SIZE_10);
-        g.setColor(c);
+        switch (this.dir){
+            case LEFT :
+                g.drawImage(ResourceMgr.bulletL, this.x, this.y,null);
+                break;
+            case UP :
+                g.drawImage(ResourceMgr.bulletU, this.x, this.y,null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.bulletR, this.x, this.y,null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.bulletD, this.x, this.y,null);
+                break;
+            default:
+                break;
+        }
         move();
 
     }
     public void move() {
-        switch (dir){
-
+        switch (this.dir){
             case LEFT :
-                this.x -= speed;
+                this.x -= this.speed;
                 break;
-
             case UP :
-                this.y -= speed;
+                this.y -= this.speed;
                 break;
-
             case RIGHT:
-                this.x += speed;
+                this.x += this.speed;
                 break;
-
-            case DOWN: this.y += speed;
+            case DOWN: this.y += this.speed;
                 break;
-
+            default:
+                break;
         }
 
-        if(this.x < 0 || this.y < 0
-                || this.x > CONSTANTS.WINDOW_WIDTH
-                || this.y > CONSTANTS.WINDOW_HEIGHT)
-            live = false;
-
-        checkDestroyTank();
-        //checkMyTank();
-    }
-
-    private void checkDestroyTank() {
-
-        for(ListIterator<Tank> iterators = tf.tankList.listIterator();iterators.hasNext();){
-            Tank tank = iterators.next();
-            int tx = tank.getX();
-            int ty = tank.getY();
-            int tw = tank.getWidth();
-            int th = tank.getHeight();
-            if((this.x - CONSTANTS.BULLET_SIZE_10 > tx && this.x - CONSTANTS.BULLET_SIZE_10 < tx + tw)
-                    &&(this.y - CONSTANTS.BULLET_SIZE_10 > ty && this.y- CONSTANTS.BULLET_SIZE_10 < ty + th)){
-                this.live = false;
-                tank.setLive(false);
-            }
-        }
-    }
-
-
-    private void checkMyTank() {
-
-        Tank tank = tf.myTank;
-        int tx = tank.getX();
-        int ty = tank.getY();
-        int tw = tank.getWidth();
-        int th = tank.getHeight();
-        if((this.x - CONSTANTS.BULLET_SIZE_10 > tx && this.x - CONSTANTS.BULLET_SIZE_10 < tx + tw)
-                ||(this.y - CONSTANTS.BULLET_SIZE_10 > ty && this.y- CONSTANTS.BULLET_SIZE_10 < ty + th)){
-            //tf.myTank = isLive();
-        }
+        if(this.x < 0 || this.x > CONSTANTS.WINDOW_WIDTH
+                || this.y < 0 || this.y > CONSTANTS.WINDOW_HEIGHT)
+            this.die();
 
     }
 
-    @Override
-    public String toString() {
-        return "Bullet{" +
-                "x=" + x +
-                ", y=" + y +
-                ", type=" + type +
-                ", power=" + power +
-                ", size=" + size +
-                ", speed=" + speed +
-                ", dir=" + dir +
-                '}';
+    public void collisionWidth(Tank tank) {
+        if(this.group == tank.getGroup()) return;
+
+        //TODO:用一个rect来记录子弹或坦克的位置
+        Rectangle tankRect = tank.getRectangle();
+        Rectangle bulletRect = this.getRectangle();
+        tankRect.setRect(tank.getX(), tank.getY(),Tank.WIDTH,Tank.HEIGHT);
+        bulletRect.setRect(this.x, this.y,Bullet.WIDTH,Bullet.HEIGHT);
+        if(bulletRect.intersects(tankRect)){
+            this.die();
+            tank.die();
+        }
+
     }
 }
