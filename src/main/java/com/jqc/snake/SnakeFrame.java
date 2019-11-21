@@ -18,7 +18,7 @@ public class SnakeFrame extends Frame {
     public List<SnakePart> snakeParts = new ArrayList();
     public SnakePart snakeHead;
 
-    SnakePart food = new SnakePart(300, 200, Dir.DOWN,this);
+    SnakePart food;
 
 
     public SnakeFrame(){
@@ -68,32 +68,44 @@ public class SnakeFrame extends Frame {
         }
 
         food.paint(g);
-
-        for(int i = 0; i < snakeParts.size(); i++){
-            //SnakePart snakePart = snakeParts.get(i);
-            snakeParts.get(i).paint(g);
+        for(SnakePart snakePart : snakeParts){
+            snakePart.paint(g);
         }
 
+        for(SnakePart snakePart : snakeParts){
+            snakeHead.collisionWidth(snakePart);
+        }
+        snakeHead.collisionWidth(food);
+
+        if(!snakeHead.isMoving())return;
+        setSnakePartsXY();
+        snakeHead.move();
+
+    }
+
+    private void setSnakePartsXY() {
         for(int i = snakeParts.size() - 1; i >= 0; i--){
             SnakePart thisSnakePart = snakeParts.get(i);
-            if(!thisSnakePart.isMoving()) return;
             if(i != 0){
                 SnakePart lastSnakePart = snakeParts.get(i - 1);
                 thisSnakePart.setX(lastSnakePart.getX());
                 thisSnakePart.setY(lastSnakePart.getY());
             }else {
-                snakeParts.get(i).move();
+                thisSnakePart.setX(snakeHead.getX());
+                thisSnakePart.setY(snakeHead.getY());
             }
         }
-
     }
 
     private void initSnake() {
+        food = new SnakePart(300, 200, Dir.DOWN,this);
+        food.setFood(true);
         for(int i = 0; i < 8; i++){
             SnakePart snakePart = new SnakePart(80 - SnakeFrame.SNAKE_WIDTH * i, 80, Dir.RIGHT, this);
-            snakeParts.add(snakePart);
             if(i == 0)
                 snakeHead = snakePart;
+            else
+                snakeParts.add(snakePart);
 
         }
     }
@@ -126,6 +138,7 @@ public class SnakeFrame extends Frame {
 
         @Override
         public void keyReleased(KeyEvent e) {
+
             switch (e.getKeyCode()){
                 case KeyEvent.VK_DOWN:
                     bD = false;
@@ -142,25 +155,20 @@ public class SnakeFrame extends Frame {
                 default:
                     break;
             }
+
             setMainSankeDir();
         }
 
         private void setMainSankeDir() {
-            SnakePart snakePart = snakeHead;
 
-            if(bL && snakePart.getDir() != Dir.RIGHT) snakePart.setDir(Dir.LEFT);
-            if(bU && snakePart.getDir() != Dir.DOWN) snakePart.setDir(Dir.UP);
-            if(bR && snakePart.getDir() != Dir.LEFT) snakePart.setDir(Dir.RIGHT);
-            if(bD && snakePart.getDir() != Dir.UP) snakePart.setDir(Dir.DOWN);
+            if(!snakeHead.isMoving())
+                snakeHead.setMoving(true);
 
-            if(!snakePart.isMoving())
-                setSnakePartsMove();
+            if(bL && snakeHead.getDir() != Dir.RIGHT) snakeHead.setDir(Dir.LEFT);
+            if(bU && snakeHead.getDir() != Dir.DOWN) snakeHead.setDir(Dir.UP);
+            if(bR && snakeHead.getDir() != Dir.LEFT) snakeHead.setDir(Dir.RIGHT);
+            if(bD && snakeHead.getDir() != Dir.UP) snakeHead.setDir(Dir.DOWN);
         }
 
-        private void setSnakePartsMove() {
-            for(int i = 0; i < snakeParts.size(); i++){
-                snakeParts.get(i).setMoving(true);
-            }
-        }
     }
 }
