@@ -11,7 +11,7 @@ public class CONSTANTS {
 
     public static final int BULLET_POWER_1 = 1;
 
-    public static final int WINDOW_WIDTH = 800;
+    public static final int WINDOW_WIDTH = 1080;
 
-    public static final int WINDOW_HEIGHT = 600;
+    public static final int WINDOW_HEIGHT = 960;
 }

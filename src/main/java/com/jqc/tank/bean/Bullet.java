@@ -25,7 +25,7 @@ public class Bullet {
     private int power;
     private int size;
 
-    private Rectangle rectangle;
+    private Rectangle rectangle = new Rectangle();
 
     public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
@@ -33,6 +33,11 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+
+        rectangle.x = this.x;
+        rectangle.y = this.y;
+        rectangle.width = Tank.WIDTH;
+        rectangle.height = Tank.HEIGHT;
     }
 
     public boolean isLiving() {
@@ -60,9 +65,6 @@ public class Bullet {
     }
 
     public Rectangle getRectangle() {
-        if(rectangle == null){
-            rectangle = new Rectangle();
-        }
         return rectangle;
     }
 
@@ -103,9 +105,13 @@ public class Bullet {
                 break;
         }
 
+        rectangle.x = this.x;
+        rectangle.y = this.y;
+
         if(this.x < 0 || this.x > CONSTANTS.WINDOW_WIDTH
                 || this.y < 0 || this.y > CONSTANTS.WINDOW_HEIGHT)
             this.die();
+
 
     }
 
@@ -114,8 +120,7 @@ public class Bullet {
 
         Rectangle tankRect = tank.getRectangle();
         Rectangle bulletRect = this.getRectangle();
-        tankRect.setRect(tank.getX(), tank.getY(),Tank.WIDTH,Tank.HEIGHT);
-        bulletRect.setRect(this.x, this.y,Bullet.WIDTH,Bullet.HEIGHT);
+
         if(bulletRect.intersects(tankRect)){
             this.die();
             tank.die();

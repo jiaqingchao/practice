@@ -70,15 +70,15 @@ public class TankFrame extends Frame {
         g.drawString("爆炸的数量：" + Explodes.size(), 10, 90);
         g.setColor(c);
 
-        if(!redTank.isLiving()){
-            c = g.getColor();
-            g.setColor(Color.WHITE);
-            g.drawString("GAME OVER", CONSTANTS.WINDOW_WIDTH / 2 - 50, CONSTANTS.WINDOW_HEIGHT / 2 - 10);
-            g.setColor(c);
-            bullets.removeAll(bullets);
-            tanks.removeAll(tanks);
-            return;
-        }
+//        if(!redTank.isLiving()){
+//            c = g.getColor();
+//            g.setColor(Color.WHITE);
+//            g.drawString("GAME OVER", CONSTANTS.WINDOW_WIDTH / 2 - 50, CONSTANTS.WINDOW_HEIGHT / 2 - 10);
+//            g.setColor(c);
+//            bullets.removeAll(bullets);
+//            tanks.removeAll(tanks);
+//            return;
+//        }
 
         redTank.paint(g);
 

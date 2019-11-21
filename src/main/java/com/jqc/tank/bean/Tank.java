@@ -11,14 +11,14 @@ import java.util.Random;
 
 public class Tank {
     private int x,y;
-    public static int WIDTH = ResourceMgr.tankU.getWidth();
-    public static int HEIGHT = ResourceMgr.tankU.getHeight();
+    public static int WIDTH = ResourceMgr.redTankU.getWidth();
+    public static int HEIGHT = ResourceMgr.redTankU.getHeight();
     private Dir dir = Dir.DOWN;
     private int speed = CONSTANTS.TANK_SPEED_5;
     private boolean moving = false;
     private boolean living = true;
 
-    private Rectangle rectangle;
+    private Rectangle rectangle = new Rectangle();
 
     private TankFrame tf;
     Random random = new Random();
@@ -31,8 +31,14 @@ public class Tank {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
-        if(this.group == Group.AI)
+        if(this.group == Group.AI){
             this.moving = true;
+        }
+
+        rectangle.x = this.x;
+        rectangle.y = this.y;
+        rectangle.width = Tank.WIDTH;
+        rectangle.height = Tank.HEIGHT;
     }
 
     public void setDir(Dir dir) {
@@ -60,31 +66,30 @@ public class Tank {
     }
 
     public Rectangle getRectangle(){
-        if(rectangle == null){
-            rectangle = new Rectangle();
-        }
         return rectangle;
     }
 
     public void die() {
         this.living = false;
-        tf.Explodes.add(new Explode(this.x - (Explode.WIDTH - Tank.WIDTH) / 2,
-                this.y - (Explode.HEIGHT - Tank.HEIGHT), tf));
+        int eX = this.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
+        int eY = this.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;
+
+        tf.Explodes.add(new Explode(eX, eY, tf));
     }
 
     public void paint(Graphics g) {
         switch (this.dir){
             case LEFT :
-                g.drawImage(ResourceMgr.tankL, this.x, this.y,null);
+                g.drawImage(this.group == Group.RED?ResourceMgr.redTankL:ResourceMgr.aiTankL, this.x, this.y,null);
                 break;
             case UP :
-                g.drawImage(ResourceMgr.tankU, this.x, this.y,null);
+                g.drawImage(this.group == Group.RED?ResourceMgr.redTankU:ResourceMgr.aiTankU, this.x, this.y,null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.tankR, this.x, this.y,null);
+                g.drawImage(this.group == Group.RED?ResourceMgr.redTankR:ResourceMgr.aiTankR, this.x, this.y,null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.tankD, this.x, this.y,null);
+                g.drawImage(this.group == Group.RED?ResourceMgr.redTankD:ResourceMgr.aiTankD, this.x, this.y,null);
                 break;
             default:
                 break;
@@ -111,18 +116,31 @@ public class Tank {
             default:
                 break;
         }
-        if(this.x < 0) this.x = 0;
-        if(this.y < 0) this.y = 0;
-        if(this.x > CONSTANTS.WINDOW_WIDTH - Tank.WIDTH) this.x = CONSTANTS.WINDOW_WIDTH - Tank.WIDTH;
-        if(this.y > CONSTANTS.WINDOW_HEIGHT - Tank.HEIGHT) this.y = CONSTANTS.WINDOW_HEIGHT - Tank.HEIGHT;
 
-        if(this.group == Group.AI){
-            if(random.nextInt(100) > 95){
-                this.fire();
-                randomDir();
-            }
+        // AI 随机发射子弹
+        if(this.group == Group.AI && random.nextInt(100) > 95){
+            this.fire();
         }
+        //AI 随机改变方向
+        if(this.group == Group.AI && random.nextInt(100) > 95)
+            randomDir();
 
+        boudsCheck();
+
+        rectangle.x = this.x;
+        rectangle.y = this.y;
+
+        if(this.group == Group.RED) {
+            new Thread(() -> new Audio("audio/tank_move.wav").play()).start();
+        }
+    }
+
+    private void boudsCheck() {//边界检测
+
+        if(this.x < 2) this.x = 2;
+        if(this.y < 28) this.y = 28;
+        if(this.x > CONSTANTS.WINDOW_WIDTH - Tank.WIDTH - 2) this.x = CONSTANTS.WINDOW_WIDTH - Tank.WIDTH - 2;
+        if(this.y > CONSTANTS.WINDOW_HEIGHT - Tank.HEIGHT - 2) this.y = CONSTANTS.WINDOW_HEIGHT - Tank.HEIGHT - 2;
     }
 
     public void fire(){
@@ -151,7 +169,12 @@ public class Tank {
             default:
                 break;
         }
+
         tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
+
+        if(this.group == Group.RED){
+            new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
+        }
     }
     private void randomDir() {
         int randomNum = random.nextInt(4);
