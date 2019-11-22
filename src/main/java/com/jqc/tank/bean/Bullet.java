@@ -1,38 +1,31 @@
 package com.jqc.tank.bean;
 
 import com.jqc.tank.TankFrame;
-import com.jqc.tank.common.CONSTANTS;
-import com.jqc.tank.common.Dir;
-import com.jqc.tank.common.Group;
-import com.jqc.tank.common.ResourceMgr;
+import com.jqc.tank.common.*;
 
-import java.awt.*;
+import java.awt.Rectangle;
+import java.awt.Graphics;
+
 
 public class Bullet {
 
     private int x;
     private int y;
-    private int speed = CONSTANTS.BULLET_SPEED_10;
     private Dir dir;
+    private int speed = PropertyMgr.getInt(CONSTANTS.PROPERTY_BULLET_SPEED);
+    private boolean living = true;
+    private Group group;
 
     public static int WIDTH = ResourceMgr.bulletU.getWidth();
     public static int HEIGHT = ResourceMgr.bulletU.getHeight();
 
-    private boolean living = true;
-    private TankFrame tf;
-
-    private Group group;
-    private int power;
-    private int size;
-
     private Rectangle rectangle = new Rectangle();
 
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tf = tf;
 
         rectangle.x = this.x;
         rectangle.y = this.y;
@@ -48,27 +41,17 @@ public class Bullet {
         this.living = false;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
     public Rectangle getRectangle() {
         return rectangle;
     }
 
     public void paint(Graphics g) {
+        paintBullet(g);
+        move();
+
+    }
+
+    private void paintBullet(Graphics g) {
         switch (this.dir){
             case LEFT :
                 g.drawImage(ResourceMgr.bulletL, this.x, this.y,null);
@@ -85,10 +68,19 @@ public class Bullet {
             default:
                 break;
         }
-        move();
-
     }
+
     public void move() {
+
+        setXYForDirSpeed();
+
+        boudsCheck();
+
+        this.rectangle.x = this.x;
+        this.rectangle.y = this.y;
+    }
+
+    private void setXYForDirSpeed() {
         switch (this.dir){
             case LEFT :
                 this.x -= this.speed;
@@ -104,19 +96,20 @@ public class Bullet {
             default:
                 break;
         }
+    }
 
-        rectangle.x = this.x;
-        rectangle.y = this.y;
-
-        if(this.x < 0 || this.x > CONSTANTS.WINDOW_WIDTH
-                || this.y < 0 || this.y > CONSTANTS.WINDOW_HEIGHT)
+    private void boudsCheck() {
+        if(this.x < 0 || this.x > TankFrame.WIDTH
+                || this.y < 0 || this.y > TankFrame.HEIGHT){
             this.die();
-
-
+        }
     }
 
     public void collisionWidth(Tank tank) {
-        if(this.group == tank.getGroup()) return;
+
+        if(this.group == tank.getGroup()){
+            return;
+        }
 
         Rectangle tankRect = tank.getRectangle();
         Rectangle bulletRect = this.getRectangle();
@@ -125,6 +118,5 @@ public class Bullet {
             this.die();
             tank.die();
         }
-
     }
 }

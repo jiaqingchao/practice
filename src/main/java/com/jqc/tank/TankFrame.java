@@ -6,6 +6,7 @@ import com.jqc.tank.bean.Tank;
 import com.jqc.tank.common.CONSTANTS;
 import com.jqc.tank.common.Dir;
 import com.jqc.tank.common.Group;
+import com.jqc.tank.common.PropertyMgr;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -18,17 +19,19 @@ import java.util.ListIterator;
 
 public class TankFrame extends Frame {
 
+    public static int WIDTH = PropertyMgr.getInt(CONSTANTS.PROPERTY_GAME_WINDOW_WIDTH);
+    public static int HEIGHT = PropertyMgr.getInt(CONSTANTS.PROPERTY_GAME_WINDOW_HEIGHT);
+
     public List<Tank> tanks = new ArrayList<>();
     public List<Bullet> bullets = new ArrayList<>();
-    public List<Explode> Explodes = new ArrayList<>();
+    public List<Explode> explodes = new ArrayList<>();
 
     public Tank redTank = new Tank(100,100,Dir.DOWN, Group.RED, this);
-    public Tank blueTank;
 
-    public TankFrame() throws Exception {
+    public TankFrame(){
 
         setVisible(true);
-        setSize(CONSTANTS.WINDOW_WIDTH, CONSTANTS.WINDOW_HEIGHT);
+        setSize(WIDTH, HEIGHT);
         setTitle("tank war");
         setResizable(false);
 
@@ -41,8 +44,6 @@ public class TankFrame extends Frame {
             }
         });
 
-//        autoAddEnemy();
-
     }
 
 //  处理双缓冲，解决闪烁问题
@@ -50,12 +51,12 @@ public class TankFrame extends Frame {
     @Override
     public void update(Graphics g){
         if(offScreenImage == null){
-            offScreenImage = this.createImage(CONSTANTS.WINDOW_WIDTH, CONSTANTS.WINDOW_HEIGHT);
+            offScreenImage = this.createImage(WIDTH, HEIGHT);
         }
         Graphics gOffScreen = offScreenImage.getGraphics();
         Color c = gOffScreen.getColor();
         gOffScreen.setColor(Color.black);
-        gOffScreen.fillRect(0, 0, CONSTANTS.WINDOW_WIDTH, CONSTANTS.WINDOW_HEIGHT);
+        gOffScreen.fillRect(0, 0, WIDTH, HEIGHT);
         gOffScreen.setColor(c);
         paint(gOffScreen);
         g.drawImage(offScreenImage, 0, 0, null);
@@ -63,53 +64,78 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g){
+        paintCount(g);
+
+        if(!redTank.isLiving()){
+            //gameOver(g);
+//            return;
+        }
+
+        redTank.paint(g);
+
+        paintExplode(g);
+
+        paintBullet(g);
+
+        paintTank(g);
+
+        collisonCheck();
+
+
+    }
+
+    private void gameOver(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.WHITE);
+        g.drawString("GAME OVER", WIDTH / 2 - 50, HEIGHT / 2 - 10);
+        g.setColor(c);
+        explodes.removeAll(explodes);
+        bullets.removeAll(bullets);
+        tanks.removeAll(tanks);
+    }
+
+    private void paintCount(Graphics g) {
         Color c = g.getColor();
         g.setColor(Color.WHITE);
         g.drawString("敌方坦克的数量：" + tanks.size(), 10, 50);
         g.drawString("子弹的数量：" + bullets.size(), 10, 70);
-        g.drawString("爆炸的数量：" + Explodes.size(), 10, 90);
+        g.drawString("爆炸的数量：" + explodes.size(), 10, 90);
         g.setColor(c);
+    }
 
-//        if(!redTank.isLiving()){
-//            c = g.getColor();
-//            g.setColor(Color.WHITE);
-//            g.drawString("GAME OVER", CONSTANTS.WINDOW_WIDTH / 2 - 50, CONSTANTS.WINDOW_HEIGHT / 2 - 10);
-//            g.setColor(c);
-//            bullets.removeAll(bullets);
-//            tanks.removeAll(tanks);
-//            return;
-//        }
-
-        redTank.paint(g);
-
-        for(ListIterator<Explode> blastIterator = Explodes.listIterator(); blastIterator.hasNext();){
+    private void paintExplode(Graphics g) {
+        for(ListIterator<Explode> blastIterator = explodes.listIterator(); blastIterator.hasNext();){
             Explode explode = blastIterator.next();
             explode.paint(g);
             if(!explode.isLiving()) blastIterator.remove();
         }
+    }
 
-        for(ListIterator<Bullet> bulletIterator = bullets.listIterator();bulletIterator.hasNext();){
+    private void paintBullet(Graphics g) {
+        for(ListIterator<Bullet> bulletIterator = bullets.listIterator(); bulletIterator.hasNext();){
             Bullet bullet = bulletIterator.next();
             bullet.paint(g);
             if(!bullet.isLiving()) bulletIterator.remove();
         }
+    }
 
-        for(ListIterator<Tank> tankListIterator = tanks.listIterator();tankListIterator.hasNext();){
+    private void paintTank(Graphics g) {
+        for(ListIterator<Tank> tankListIterator = tanks.listIterator(); tankListIterator.hasNext();){
             Tank tank = tankListIterator.next();
             tank.paint(g);
             if(!tank.isLiving()) tankListIterator.remove(); // ConcurrentModificationException   //异步新增tank,数量对不上，导致报错
         }
+    }
 
-        for(ListIterator<Bullet> bulletIterator = bullets.listIterator();bulletIterator.hasNext();){
+    private void collisonCheck() {
+        for(ListIterator<Bullet> bulletIterator = bullets.listIterator(); bulletIterator.hasNext();){
             Bullet bullet = bulletIterator.next();
             bullet.collisionWidth(redTank);
-            for(ListIterator<Tank> tankListIterator = tanks.listIterator();tankListIterator.hasNext();){
+            for(ListIterator<Tank> tankListIterator = tanks.listIterator(); tankListIterator.hasNext();){
                 bullet.collisionWidth(tankListIterator.next());
             }
 
         }
-
-
     }
 
     class MyKeyListener extends KeyAdapter{

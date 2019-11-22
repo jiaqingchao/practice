@@ -26,5 +26,3 @@
 //用一个Rectangle来记录子弹或坦克的位置
 Rectangle rect1 = new Rectangle(tank.getX(), tank.getY(),Tank.WIDTH,Tank.HEIGHT);
 Rectangle rect2 = new Rectangle(this.x, this.y,Bullet.WIDTH,Bullet.HEIGHT);
-
-
