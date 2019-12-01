@@ -95,5 +95,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:5.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.8.6" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.41.Final" level="project" />
   </component>
 </module>
