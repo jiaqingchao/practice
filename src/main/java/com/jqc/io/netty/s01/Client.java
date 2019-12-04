@@ -1,4 +1,4 @@
-package com.jqc.io.netty;
+package com.jqc.io.netty.s01;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -19,27 +19,26 @@ public class Client {
         //线程池
         EventLoopGroup workers = new NioEventLoopGroup();
         Bootstrap b = new Bootstrap();
-        b.group(workers)
-                .channel(NioSocketChannel.class)
-                .handler(new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    protected void initChannel(SocketChannel socketChannel) throws Exception {
-                        System.out.println("channel initialized!");
-                        socketChannel.pipeline().addLast(new ClientHandler());
-                    }
-                });
         try {
-            System.out.println("start to connect...");
-            ChannelFuture f = b.connect("127.0.0.1",8888).sync();
+            ChannelFuture f = b.group(workers)
+                    .channel(NioSocketChannel.class)
+                    .handler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        protected void initChannel(SocketChannel socketChannel) throws Exception {
+                            System.out.println("channel initialized!");
+                            socketChannel.pipeline().addLast(new ClientHandler());
+                        }
+                    }).connect("127.0.0.1",8888)
+                    .addListener((ChannelFuture channelFuture) -> {
+                        if(!channelFuture.isSuccess()){
+                            System.out.println("not connected");
+                        }else {
+                            System.out.println("connected");
+                        }
+                    }).sync();
 
-            f.addListener((ChannelFuture channelFuture) -> {
-                if(!channelFuture.isSuccess()){
-                    System.out.println("not connected");
-                }else {
-                    System.out.println("connected");
-                }
-            });
-            f.sync();
+            System.out.println("start to connect...");
+
             f.channel().closeFuture().sync(); //close() -> ChannelFuture,  //ChannelFuture调用close()时执行
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -50,6 +49,7 @@ public class Client {
 
     }
 }
+
 class ClientHandler extends ChannelInboundHandlerAdapter{
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {

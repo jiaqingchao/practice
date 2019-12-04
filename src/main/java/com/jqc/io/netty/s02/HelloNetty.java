@@ -1,4 +1,4 @@
-package com.jqc.io.netty;
+package com.jqc.io.netty.s02;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
