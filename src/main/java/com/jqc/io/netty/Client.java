@@ -7,6 +7,7 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.CharsetUtil;
 import io.netty.util.ReferenceCountUtil;
 
 public class Client {
@@ -15,6 +16,7 @@ public class Client {
         }
 
     private void clientStart() {
+        //线程池
         EventLoopGroup workers = new NioEventLoopGroup();
         Bootstrap b = new Bootstrap();
         b.group(workers)
@@ -29,7 +31,16 @@ public class Client {
         try {
             System.out.println("start to connect...");
             ChannelFuture f = b.connect("127.0.0.1",8888).sync();
-            f.channel().closeFuture().sync();
+
+            f.addListener((ChannelFuture channelFuture) -> {
+                if(!channelFuture.isSuccess()){
+                    System.out.println("not connected");
+                }else {
+                    System.out.println("connected");
+                }
+            });
+            f.sync();
+            f.channel().closeFuture().sync(); //close() -> ChannelFuture,  //ChannelFuture调用close()时执行
         } catch (InterruptedException e) {
             e.printStackTrace();
         }finally {
@@ -42,24 +53,20 @@ public class Client {
 class ClientHandler extends ChannelInboundHandlerAdapter{
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        //channle 第一次连上可用，写一个字符串
         System.out.println("channel is activated.");
-
-        final ChannelFuture f = ctx.writeAndFlush(Unpooled.copiedBuffer("HelloNetty".getBytes()));
-        f.addListener(new ChannelFutureListener() {
-            @Override
-            public void operationComplete(ChannelFuture channelFuture) throws Exception {
-                System.out.println("msg send!");
-                //ctx.close();
-            }
+        ByteBuf byteBuf = Unpooled.copiedBuffer("HelloNetty".getBytes());
+        final ChannelFuture f = ctx.writeAndFlush(byteBuf);
+        f.addListener((ChannelFuture channelFuture)-> {
+            System.out.println("msg send!");
         });
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         try{
-
             ByteBuf buf = (ByteBuf)msg;
-            System.out.println(buf.toString());
+            System.out.println(buf.toString(CharsetUtil.UTF_8));
         }finally {
             ReferenceCountUtil.release(msg);
         }

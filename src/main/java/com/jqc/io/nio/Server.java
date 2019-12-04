@@ -52,15 +52,16 @@ public class Server {
                 e.printStackTrace();
             } finally {
                 try {
-                    sc.close();
+                    if(sc!=null){
+                        sc.close();
+                    }
+                    if(ssc!=null){
+                        ssc.close();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                try {
-                    ssc.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
             }
         }else if(key.isReadable()){
             SocketChannel sc = null;
