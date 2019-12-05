@@ -18,17 +18,17 @@ public class AllSort {
      */
 
     public void selectionSort(int[] arr){
-        for(int i = 0; i < arr.length - 1; i++){
-            int minPos = i;
-            for(int j = i + 1; j < arr.length; j++){
-                if(arr[j] < arr[minPos]){
-                    minPos = j;
+
+        for(int i = 0;i< arr.length-1;i++){
+            int minIndex = i;
+            for(int j = i + 1; j< arr.length;j++){
+                if(arr[minIndex]>arr[j]){
+                    minIndex = j;
                 }
             }
-            swap(arr, i, minPos);
+            swap(arr,i,minIndex);
         }
 
-//        printArr(arr);
     }
     /**
      * 冒泡排序
@@ -40,15 +40,12 @@ public class AllSort {
      */
 
     public void bubbleSort(int[] arr){
-        for(int i = arr.length - 1; i > 0; i--){
-//            boolean falg = true;
+        for(int i = arr.length - 1; i > 0;i--){
             for(int j = 0; j < i; j++){
-                if(arr[j + 1] < arr[j]){
-                    swap_binary(arr, j + 1, j);
-//                    falg = false;
+                if(arr[j] > arr[j + 1]){
+                    swap(arr,j,j+1);
                 }
             }
-//            if(falg) return;
         }
     }
 
@@ -65,16 +62,12 @@ public class AllSort {
     public void insertionSort(int[] arr){
         for(int i = 1; i < arr.length; i++){
             int temp = arr[i];
-            int j = i;
-            while (j > 0 && temp < arr[j - 1]){ // temp < arr[j - 1] 放在 if 里,搞了半个小时
-            //while (j > 0 && arr[j] < arr[j - 1]){
-                arr[j] = arr[--j];
-                //swap_binary(arr, j ,j - 1); // i和j换位置
-                //j--;
+            int j;
+            for(j = i; j > 0 && temp < arr[j-1]; j--){
+                arr[j] = arr[j-1];
             }
             arr[j] = temp;
         }
-
     }
 
     /**
@@ -82,17 +75,18 @@ public class AllSort {
      * @param arr
      */
     public void shellSort(int[] arr){
+
         int h = 1;
-        while(h < arr.length / 3){ //knuth 间隔序列
+        while (h < arr.length / 3){
             h = 3 * h + 1;
         }
-        for(h = h; h > 0; h = (h - 1) / 3){ //bug int h = arr.length/3
+
+        for(h = h; h > 0; h = ( h - 1) / 3){
             for(int i = h; i < arr.length; i++){
                 int temp = arr[i];
-                int j = i;
-                while (j >= h && temp < arr[j - h]){ //bug j > h
+                int j;
+                for(j = i; j >= h && temp < arr[j - h]; j -= h){ // j > h,  j > 0 - > j >= 1
                     arr[j] = arr[j - h];
-                    j = j - h;
                 }
                 arr[j] = temp;
             }
@@ -104,19 +98,18 @@ public class AllSort {
      * @param arr
      */
     public void mergeSort(int[] arr){
-        mergeRecursion(arr, 0, arr.length - 1);
-
+        mergeRecursion(arr, 0, arr.length -1);
     }
 
     public void mergeRecursion(int arr[], int left, int right){
-        if(left >= right) return; //bug 未加
-
+        if(right <= left){
+            return;
+        }
         int mid = left + (right - left) / 2;
+        mergeRecursion(arr,left, mid);
+        mergeRecursion(arr,mid + 1, right);
 
-        mergeRecursion(arr, left, mid);
-        mergeRecursion(arr, mid + 1, right);
-
-        merge(arr, left,mid + 1 ,right);
+        merge(arr, left, mid + 1, right);
     }
 
     public void merge(int arr[], int leftPtr, int rightPtr , int rightBound){
@@ -124,7 +117,7 @@ public class AllSort {
         int j = rightPtr;
         int k = 0;
 
-        int[] temp = new int[rightBound - leftPtr + 1];
+        int temp[] = new int[rightBound - leftPtr + 1];
 
         while (i <= rightPtr - 1 && j <= rightBound){
             if(arr[i] < arr[j]){
@@ -133,16 +126,17 @@ public class AllSort {
                 temp[k++] = arr[j++];
             }
         }
+
         while (i <= rightPtr - 1){
             temp[k++] = arr[i++];
+        }
 
-        } while (j <= rightBound){
+        while (j <= rightBound){
             temp[k++] = arr[j++];
         }
 
-        for (int m = 0; m < temp.length; m++){
-            arr[leftPtr + m] = temp[m];
-        }
+       System.arraycopy(temp,0, arr, leftPtr, temp.length);
+
     }
 
     /**
@@ -154,37 +148,34 @@ public class AllSort {
 
     }
     public void quickRecursion(int arr[], int left, int right){
-        if(left >= right) return;
+        if(left >= right){
+            return;
+        }
+        int mid = quickSort(arr, left ,right);
 
-        int mid = quickSort(arr, left, right);
-
-        mergeRecursion(arr, left, mid - 1);
-        mergeRecursion(arr, mid + 1, right);
-
+        quickRecursion(arr, left, mid - 1);
+        quickRecursion(arr, mid + 1, right);
 
     }
 
     public int quickSort(int arr[], int leftBound, int rightBound){
-
         int left = leftBound;
         int right = rightBound - 1;
         int pivot = arr[rightBound];
 
         while (left <= right){
-//            printString_Arrr(arr, "while start : ");
-
-            while(left <= right && arr[left] <= pivot) left++;
-            while(left <= right && arr[right] > pivot) right--; // bug right++
-
-            if(left < right) //bug arr[left]>arr[right]
-                swap_binary(arr, left, right);
-
-//            printString_Arrr(arr, "while end : ");
+            while (left <= right && arr[left] <= pivot){
+                left++;
+            }
+            while (left <= right && arr[right] > pivot){// 前后颠倒出现索引溢出
+                right--;
+            }
+            if(left < right){
+                swap(arr, left, right);
+            }
         }
+
         swap(arr, left, rightBound);
-
-//        printString_Arrr(arr, "end : ");
-
         return left;
     }
 
@@ -212,9 +203,15 @@ public class AllSort {
         while (mid <= more){
 //            printString_Arrr(arr, "while start : ");
 
-            while(mid <= more && arr[less] <= pivot){less++;mid++;}
-            while(mid <= more && arr[mid] > pivot && arr[mid] <= pivot2) mid++;
-            while(mid <= more && arr[more] > pivot2) more--;
+            while(mid <= more && arr[less] <= pivot){
+                less++;mid++;
+            }
+            while(mid <= more && arr[mid] > pivot && arr[mid] <= pivot2){
+                mid++;
+            }
+            while(mid <= more && arr[more] > pivot2){
+                more--;
+            }
 
             if(mid <= more && arr[mid] <= pivot){
                 swap(arr, less, mid);
@@ -336,7 +333,7 @@ public class AllSort {
             int right = bucket[i] - 1;
 
             for(int j = 0; j< bucketArr.size(); j++ ){
-                result[left + j] = (int)bucketArr.get(j);
+                result[left + j] = (int) bucketArr.get(j);
             }
 
             mergeRecursion(result, left, right);
@@ -385,7 +382,7 @@ public class AllSort {
 
             Arrays.sort(arr);
 
-            new AllSort().bucketSort(arr2);
+            new AllSort().quickSort(arr2);
 
             if(!DataChecker.check(arr, arr2))
                 wrong++;
@@ -399,7 +396,7 @@ public class AllSort {
         int[] arr = generateRandomArray(20,1,150);
         //int[] arr = {2,4,6,8,10,1,3,5,7,9};
         printArr(arr);
-        new AllSort().bucketSort(arr);
+        new AllSort().quickSort(arr);
         printArr(arr);
     }
 
