@@ -39,7 +39,7 @@ public class Tank implements Movable {
     public static void main(String[] args) {
         Tank tank = new Tank();
         //reflection 通过二进制字节码分享类的属性和方法
-        System.getProperties().put("jdk.proxy.ProxyGenerator.saveGeneratedFiles", "true");
+        System.getProperties().put("jdk.proxy.ProxyGenerator.saveGeneratedFiles", "true");//使jdk自动生成代理的class文件
         Movable m = (Movable) Proxy.newProxyInstance(Tank.class.getClassLoader(),
             new Class[]{Movable.class},//tank.class.getInterfaces()
                 new TimeProxy(tank));

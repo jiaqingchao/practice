@@ -7,11 +7,11 @@ public class Composite {
     public static void main(String[] args) {
         Branch root = new Branch("root");
         Branch a1 = new Branch("a1");
-        File f11 = new File("f11");
+        File_ f11 = new File_("f11");
         a1.add(f11);
         Branch a2 = new Branch("a2");
-        File f21 = new File("f21");
-        File f22 = new File("f22");
+        File_ f21 = new File_("f21");
+        File_ f22 = new File_("f22");
         a2.add(f21).add(f22);
         root.add(a1).add(a2);
         Branch b11 = new Branch("b11");
@@ -62,10 +62,10 @@ class Branch extends Node{
         return this;
     }
 }
-class File extends Node{
+class File_ extends Node{
     String name;
 
-    public File(String name) {
+    public File_(String name) {
         this.name = name;
     }
     @Override

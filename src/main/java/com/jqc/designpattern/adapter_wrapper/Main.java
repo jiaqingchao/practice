@@ -13,6 +13,7 @@ public class Main {
         String line = br.readLine();
         while (line != null && !line.equals("")){
             System.out.println(line);
+            line = br.readLine();
         }
         br.close();
     }
