@@ -7,7 +7,7 @@ class Child {
         return cry;
     }
 
-    public void wakeUp(){
+    public void wakeUp() {
         System.out.println("Waked Up! Crying wuwuwuwuwuwu...");
         cry = true;
     }
@@ -17,10 +17,10 @@ public class Main {
 
     public static void main(String[] args) {
         Child child = new Child();
-        while (!child.isCry()){
+        while (!child.isCry()) {
             try {
                 Thread.sleep(1000);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             System.out.println("observing...");

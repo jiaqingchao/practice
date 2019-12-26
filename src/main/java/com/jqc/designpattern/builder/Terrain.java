@@ -5,8 +5,9 @@ public class Terrain {
     Fort f;
     Mine m;
 }
-class Wall{
-    int x,y,w,h;
+
+class Wall {
+    int x, y, w, h;
 
     public Wall(int x, int y, int w, int h) {
         this.x = x;
@@ -15,8 +16,9 @@ class Wall{
         this.h = h;
     }
 }
-class Fort{
-    int x,y,w,h;
+
+class Fort {
+    int x, y, w, h;
 
     public Fort(int x, int y, int w, int h) {
         this.x = x;
@@ -25,8 +27,9 @@ class Fort{
         this.h = h;
     }
 }
-class Mine{
-    int x,y,w,h;
+
+class Mine {
+    int x, y, w, h;
 
     public Mine(int x, int y, int w, int h) {
         this.x = x;

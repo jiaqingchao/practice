@@ -11,7 +11,7 @@ public class Main {
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
         String line = br.readLine();
-        while (line != null && !line.equals("")){
+        while (line != null && !line.equals("")) {
             System.out.println(line);
             line = br.readLine();
         }

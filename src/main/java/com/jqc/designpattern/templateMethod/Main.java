@@ -8,16 +8,18 @@ public class Main {
 
 }
 
-abstract class F{
-    public void m(){
+abstract class F {
+    public void m() {
         op1();
         op2();
     }
 
     abstract void op1();
+
     abstract void op2();
 }
-class C1 extends F{
+
+class C1 extends F {
     @Override
     void op1() {
         System.out.println("op1");

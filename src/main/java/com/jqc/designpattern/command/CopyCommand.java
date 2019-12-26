@@ -1,6 +1,6 @@
 package com.jqc.designpattern.command;
 
-public class CopyCommand extends Command{
+public class CopyCommand extends Command {
     Content c;
 
     public CopyCommand(Content c) {
@@ -9,11 +9,11 @@ public class CopyCommand extends Command{
 
     @Override
     public void doit() {
-        c.msg = c.msg +c.msg;
+        c.msg = c.msg + c.msg;
     }
 
     @Override
     public void undo() {
-        c.msg = c.msg.substring(0,c.msg.length()/2);
+        c.msg = c.msg.substring(0, c.msg.length() / 2);
     }
 }

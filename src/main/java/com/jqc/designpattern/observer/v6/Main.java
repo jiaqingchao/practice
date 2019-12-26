@@ -9,26 +9,28 @@ import java.util.List;
 class Child {
     private boolean cry = false;
     private List<Observer> observers = new ArrayList<>();
+
     {
         observers.add(new Dad());
         observers.add(new Mum());
         observers.add(new Dog());
     }
+
     public boolean isCry() {
         return cry;
     }
 
-    wakeUpEvent event = new wakeUpEvent(System.currentTimeMillis(),"bed");
+    wakeUpEvent event = new wakeUpEvent(System.currentTimeMillis(), "bed");
 
-    public void wakeUp(){
+    public void wakeUp() {
         cry = true;
-        for (Observer observer: observers) {
+        for (Observer observer : observers) {
             observer.actionOnWakeup(event);
         }
     }
 }
 
-class wakeUpEvent{
+class wakeUpEvent {
     long timestamp;
     String loc;
 
@@ -38,12 +40,12 @@ class wakeUpEvent{
     }
 }
 
-interface Observer{
+interface Observer {
     void actionOnWakeup(wakeUpEvent event);
 }
 
 class Dad implements Observer {
-    public void feed(){
+    public void feed() {
         System.out.println("Dad feeding...");
     }
 
@@ -54,9 +56,10 @@ class Dad implements Observer {
 }
 
 class Mum implements Observer {
-    public void hug(){
+    public void hug() {
         System.out.println("Mum hugging...");
     }
+
     @Override
     public void actionOnWakeup(wakeUpEvent event) {
         hug();
@@ -64,9 +67,10 @@ class Mum implements Observer {
 }
 
 class Dog implements Observer {
-    public void wang(){
+    public void wang() {
         System.out.println("Dog wang...");
     }
+
     @Override
     public void actionOnWakeup(wakeUpEvent event) {
         wang();

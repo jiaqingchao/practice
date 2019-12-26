@@ -2,16 +2,17 @@ package com.jqc.designpattern.allDP;
 
 public class Pretotype {
     public static void main(String[] args) throws CloneNotSupportedException {
-        Person2 p = new Person2(11,new Person2.Locahost(11,"sss"));
+        Person2 p = new Person2(11, new Person2.Locahost(11, "sss"));
         System.out.println(p);
         Person2 p2 = p.clone();
-        p.loc.name ="ww";
+        p.loc.name = "ww";
         System.out.println(p2);
 
     }
 
 }
-class Person2 implements Cloneable{
+
+class Person2 implements Cloneable {
     int id;
     Locahost loc;
 
@@ -20,7 +21,7 @@ class Person2 implements Cloneable{
         this.loc = loc;
     }
 
-    static class Locahost implements Cloneable{
+    static class Locahost implements Cloneable {
         int roomNo;
         String name;
 
@@ -50,9 +51,10 @@ class Person2 implements Cloneable{
                 ", loc=" + loc +
                 '}';
     }
+
     @Override
     public Person2 clone() throws CloneNotSupportedException {
-        Person2 p = (Person2)super.clone();
+        Person2 p = (Person2) super.clone();
         p.loc = (Locahost) this.loc.clone();
         return p;
     }

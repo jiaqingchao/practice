@@ -3,10 +3,11 @@ package com.jqc.designpattern.composite;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class Node{
+abstract class Node {
     abstract public void p();
 }
-class LeafNode extends Node{
+
+class LeafNode extends Node {
     String content;
 
     public LeafNode(String content) {
@@ -18,7 +19,8 @@ class LeafNode extends Node{
         System.out.println(content);
     }
 }
-class BranchNode extends Node{
+
+class BranchNode extends Node {
     List<Node> nodes = new ArrayList();
     String name;
 
@@ -26,7 +28,7 @@ class BranchNode extends Node{
         this.name = name;
     }
 
-    public void add(Node n){
+    public void add(Node n) {
         nodes.add(n);
     }
 
@@ -35,6 +37,7 @@ class BranchNode extends Node{
         System.out.println(name);
     }
 }
+
 public class Main {
     public static void main(String[] args) {
         BranchNode root = new BranchNode("root");
@@ -52,16 +55,16 @@ public class Main {
         chapter2.add(b21);
         b21.add(c211);
         b21.add(c212);
-        tree(root,0);
+        tree(root, 0);
     }
 
     private static void tree(Node b, int depth) {
-        for (int i = 0; i < depth;i++){
+        for (int i = 0; i < depth; i++) {
             System.out.print("--");
         }
         b.p();
-        if(b instanceof BranchNode){
-            for (Node n : ((BranchNode)b).nodes){
+        if (b instanceof BranchNode) {
+            for (Node n : ((BranchNode) b).nodes) {
                 tree(n, depth + 1);
             }
         }

@@ -13,26 +13,25 @@ public class PropertyMgr {
             properties = new Properties();
             properties.load(PropertyMgr.class.getClassLoader().getResourceAsStream("config.properties"));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static String get(String key){
-        if(properties == null){
+    public static String get(String key) {
+        if (properties == null) {
             loadProperties();
         }
         return properties.getProperty(key);
     }
 
-    public static int getInt(String key){
-        if(properties == null){
+    public static int getInt(String key) {
+        if (properties == null) {
             loadProperties();
         }
         return Integer.valueOf(properties.getProperty(key));
 
     }
-
 
 
 }

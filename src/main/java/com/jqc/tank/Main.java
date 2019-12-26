@@ -7,19 +7,19 @@ import com.jqc.tank.common.Group;
 import com.jqc.tank.common.PropertyMgr;
 
 public class Main {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
 
         TankFrame tf = new TankFrame();
 
         int initTankCount = PropertyMgr.getInt(CONSTANTS.PROPERTY_INIT_TANK_COUNT);
 
-        for(int i = 0; i < initTankCount; i++){
-            tf.tanks.add(new Tank(50 + i * 80,200, Dir.DOWN, Group.AI, tf));
+        for (int i = 0; i < initTankCount; i++) {
+            tf.tanks.add(new Tank(50 + i * 80, 200, Dir.DOWN, Group.AI, tf));
         }
 
         //new Thread(()->new Audio("audio/war1.wav").loop()).start();
 
-        while (true){
+        while (true) {
             Thread.sleep(50);
             tf.repaint();
         }

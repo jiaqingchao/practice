@@ -21,11 +21,11 @@ public class Main {
     }
 }
 
-interface Filter{
-    boolean doFilter(Request req,Response res, FilterChain chain);
+interface Filter {
+    boolean doFilter(Request req, Response res, FilterChain chain);
 }
 
-class Response{
+class Response {
     String str;
 
     public String getStr() {
@@ -43,7 +43,8 @@ class Response{
                 '}';
     }
 }
-class Request{
+
+class Request {
     String str;
 
     public String getStr() {
@@ -64,7 +65,7 @@ class Request{
 
 class FaceFilter implements Filter {
     @Override
-    public boolean doFilter(Request req,Response res, FilterChain chain) {
+    public boolean doFilter(Request req, Response res, FilterChain chain) {
         System.out.println(1);
         chain.filters.remove(this);
 
@@ -77,7 +78,7 @@ class FaceFilter implements Filter {
 
 class SensitiveFilter implements Filter {
     @Override
-    public boolean doFilter(Request req,Response res, FilterChain chain) {
+    public boolean doFilter(Request req, Response res, FilterChain chain) {
         System.out.println(2);
         chain.filters.remove(this);
         chain.doFilter(req, res, chain);
@@ -88,14 +89,16 @@ class SensitiveFilter implements Filter {
 
 class FilterChain implements Filter {
     LinkedList<Filter> filters = new LinkedList<>();
-    public FilterChain add(Filter f){
+
+    public FilterChain add(Filter f) {
         filters.add(f);
         return this;
     }
+
     @Override
-    public boolean doFilter(Request req, Response res, FilterChain chain){
-        for (Filter f: chain.filters) {
-            if(!f.doFilter(req, res, chain)){
+    public boolean doFilter(Request req, Response res, FilterChain chain) {
+        for (Filter f : chain.filters) {
+            if (!f.doFilter(req, res, chain)) {
                 return false;
             }
         }

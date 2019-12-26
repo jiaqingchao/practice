@@ -2,15 +2,20 @@ package com.jqc.designpattern.state.v1;
 
 public class MM {
     String name;
-    private enum MMState{HAPPY,SAD}
+
+    private enum MMState {HAPPY, SAD}
+
     MMState state;
-    public void smile(){
+
+    public void smile() {
         //swith case
     }
-    public void cry(){
+
+    public void cry() {
         //swith case
     }
-    public void say(){
+
+    public void say() {
         //swith case
     }
 }

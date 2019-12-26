@@ -14,36 +14,39 @@ public class AllSort {
      * 一次循环找出最小值的下标，
      * 然后将其放在当前查找数组的最前边
      * 稳定性：不稳，所以基本不用
+     *
      * @param arr
      */
 
-    public void selectionSort(int[] arr){
+    public void selectionSort(int[] arr) {
 
-        for(int i = 0;i< arr.length-1;i++){
+        for (int i = 0; i < arr.length - 1; i++) {
             int minIndex = i;
-            for(int j = i + 1; j< arr.length;j++){
-                if(arr[minIndex]>arr[j]){
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[minIndex] > arr[j]) {
                     minIndex = j;
                 }
             }
-            swap(arr,i,minIndex);
+            swap(arr, i, minIndex);
         }
 
     }
+
     /**
      * 冒泡排序
      * 从前往后找，两两比较，如果前边的数小，则交换位置，直到最后一位，
      * 之后重复这一过程
      * 注释部分为最快时间复杂度的写法，不过提高平均时间复杂度
      * 稳定性：稳，但速度太慢，基本不用
+     *
      * @param arr
      */
 
-    public void bubbleSort(int[] arr){
-        for(int i = arr.length - 1; i > 0;i--){
-            for(int j = 0; j < i; j++){
-                if(arr[j] > arr[j + 1]){
-                    swap(arr,j,j+1);
+    public void bubbleSort(int[] arr) {
+        for (int i = arr.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1);
                 }
             }
         }
@@ -56,15 +59,16 @@ public class AllSort {
      * 把这个数放到应该放的位置然后有序数组长度加1，重复这个过程
      * 简单排序首选，速度不输于选择排序，并且是稳定的，优化后速度更快
      * 注释部分为未优化的
+     *
      * @param arr
      */
 
-    public void insertionSort(int[] arr){
-        for(int i = 1; i < arr.length; i++){
+    public void insertionSort(int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
             int temp = arr[i];
             int j;
-            for(j = i; j > 0 && temp < arr[j-1]; j--){
-                arr[j] = arr[j-1];
+            for (j = i; j > 0 && temp < arr[j - 1]; j--) {
+                arr[j] = arr[j - 1];
             }
             arr[j] = temp;
         }
@@ -72,20 +76,21 @@ public class AllSort {
 
     /**
      * 希尔排序
+     *
      * @param arr
      */
-    public void shellSort(int[] arr){
+    public void shellSort(int[] arr) {
 
         int h = 1;
-        while (h < arr.length / 3){
+        while (h < arr.length / 3) {
             h = 3 * h + 1;
         }
 
-        for(h = h; h > 0; h = ( h - 1) / 3){
-            for(int i = h; i < arr.length; i++){
+        for (h = h; h > 0; h = (h - 1) / 3) {
+            for (int i = h; i < arr.length; i++) {
                 int temp = arr[i];
                 int j;
-                for(j = i; j >= h && temp < arr[j - h]; j -= h){ // j > h,  j > 0 - > j >= 1
+                for (j = i; j >= h && temp < arr[j - h]; j -= h) { // j > h,  j > 0 - > j >= 1
                     arr[j] = arr[j - h];
                 }
                 arr[j] = temp;
@@ -95,82 +100,85 @@ public class AllSort {
 
     /**
      * 归并排序
+     *
      * @param arr
      */
-    public void mergeSort(int[] arr){
-        mergeRecursion(arr, 0, arr.length -1);
+    public void mergeSort(int[] arr) {
+        mergeRecursion(arr, 0, arr.length - 1);
     }
 
-    public void mergeRecursion(int arr[], int left, int right){
-        if(right <= left){
+    public void mergeRecursion(int arr[], int left, int right) {
+        if (right <= left) {
             return;
         }
         int mid = left + (right - left) / 2;
-        mergeRecursion(arr,left, mid);
-        mergeRecursion(arr,mid + 1, right);
+        mergeRecursion(arr, left, mid);
+        mergeRecursion(arr, mid + 1, right);
 
         merge(arr, left, mid + 1, right);
     }
 
-    public void merge(int arr[], int leftPtr, int rightPtr , int rightBound){
+    public void merge(int arr[], int leftPtr, int rightPtr, int rightBound) {
         int i = leftPtr;
         int j = rightPtr;
         int k = 0;
 
         int temp[] = new int[rightBound - leftPtr + 1];
 
-        while (i <= rightPtr - 1 && j <= rightBound){
-            if(arr[i] < arr[j]){
+        while (i <= rightPtr - 1 && j <= rightBound) {
+            if (arr[i] < arr[j]) {
                 temp[k++] = arr[i++];
-            }else {
+            } else {
                 temp[k++] = arr[j++];
             }
         }
 
-        while (i <= rightPtr - 1){
+        while (i <= rightPtr - 1) {
             temp[k++] = arr[i++];
         }
 
-        while (j <= rightBound){
+        while (j <= rightBound) {
             temp[k++] = arr[j++];
         }
 
-       System.arraycopy(temp,0, arr, leftPtr, temp.length);
+        System.arraycopy(temp, 0, arr, leftPtr, temp.length);
 
     }
 
     /**
      * 快速排序
+     *
      * @param arr
      */
-    public void quickSort(int[] arr){ // QuickSort 类里的有问题
+    public void quickSort(int[] arr) { // QuickSort 类里的有问题
         quickRecursion(arr, 0, arr.length - 1);
 
     }
-    public void quickRecursion(int arr[], int left, int right){
-        if(left >= right){
+
+    public void quickRecursion(int arr[], int left, int right) {
+        if (left >= right) {
             return;
         }
-        int mid = quickSort(arr, left ,right);
+        int mid = quickSort(arr, left, right);
 
         quickRecursion(arr, left, mid - 1);
         quickRecursion(arr, mid + 1, right);
 
     }
 
-    public int quickSort(int arr[], int leftBound, int rightBound){
+    public int quickSort(int arr[], int leftBound, int rightBound) {
         int left = leftBound;
         int right = rightBound - 1;
         int pivot = arr[rightBound];
 
-        while (left <= right){
-            while (left <= right && arr[left] <= pivot){
+        while (left <= right) {
+            while (left <= right && arr[left] <= pivot) {
                 left++;
             }
-            while (left <= right && arr[right] > pivot){// 前后颠倒出现索引溢出
+            while (left <= right && arr[right] > pivot) {// 前后颠倒出现索引溢出
                 right--;
             }
-            if(left < right){
+            if (left < right) {
                 swap(arr, left, right);
             }
         }
@@ -182,44 +190,45 @@ public class AllSort {
     /**
      * 双轴快排
      */
-    public void dualQuickSort(int[] arr){ // 写完直接ok  DualQuickSort类里的有问题
+    public void dualQuickSort(int[] arr) { // 写完直接ok  DualQuickSort类里的有问题
         quickRecursion(arr, 0, arr.length - 1);
     }
 
-    public void dualQuickSort(int arr[], int leftBound, int rightBound){
-        if(leftBound >= rightBound) return;
+    public void dualQuickSort(int arr[], int leftBound, int rightBound) {
+        if (leftBound >= rightBound) return;
 
         int less = leftBound;
         int mid = leftBound;
         int more = rightBound - 2;
 
-        if(arr[rightBound - 1] > arr[rightBound]){
+        if (arr[rightBound - 1] > arr[rightBound]) {
             swap_binary(arr, rightBound - 1, rightBound);
         }
 
         int pivot = arr[rightBound - 1];
         int pivot2 = arr[rightBound];
 
-        while (mid <= more){
+        while (mid <= more) {
 //            printString_Arrr(arr, "while start : ");
 
-            while(mid <= more && arr[less] <= pivot){
-                less++;mid++;
-            }
-            while(mid <= more && arr[mid] > pivot && arr[mid] <= pivot2){
+            while (mid <= more && arr[less] <= pivot) {
+                less++;
                 mid++;
             }
-            while(mid <= more && arr[more] > pivot2){
+            while (mid <= more && arr[mid] > pivot && arr[mid] <= pivot2) {
+                mid++;
+            }
+            while (mid <= more && arr[more] > pivot2) {
                 more--;
             }
 
-            if(mid <= more && arr[mid] <= pivot){
+            if (mid <= more && arr[mid] <= pivot) {
                 swap(arr, less, mid);
                 swap(arr, mid, more);
-            }else if(mid <= more && arr[mid] > pivot2){
+            } else if (mid <= more && arr[mid] > pivot2) {
                 swap(arr, mid, more);
                 swap(arr, less, mid);
-            }else if(mid <= more){
+            } else if (mid <= more) {
                 swap(arr, less, more);
             }
 //            printString_Arrr(arr, "while end : ");
@@ -233,29 +242,30 @@ public class AllSort {
     }
 
     /**
-     *计数排序
+     * 计数排序
+     *
      * @param arr
      */
-    public int[] countSort(int[] arr){
+    public int[] countSort(int[] arr) {
         int maxInt = arr[0];
         int minInt = arr[0];
-        for(int i = 1; i< arr.length;i++){
-            if(arr[i]<minInt) minInt = arr[i];
-            if(arr[i]>maxInt) maxInt = arr[i];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] < minInt) minInt = arr[i];
+            if (arr[i] > maxInt) maxInt = arr[i];
         }
-        int[] count = new int[maxInt-minInt+1];
+        int[] count = new int[maxInt - minInt + 1];
         int[] result = new int[arr.length];
 
-        for(int i = 0; i< arr.length;i++){ // bug i=0， i< arr.length //count.length i = count[0]
+        for (int i = 0; i < arr.length; i++) { // bug i=0， i< arr.length //count.length i = count[0]
             count[arr[i] - minInt]++; // bug count[i]++ count[arr[i]]++;
         }
 
-        for(int i = 1;i<count.length;i++){//bug i = count[0]
+        for (int i = 1; i < count.length; i++) {//bug i = count[0]
             //System.out.println(i +" " + (arr[i] - minInt) + " " + count[arr[i] - minInt]);
-            count[i] = count[i] + count[i-1];
+            count[i] = count[i] + count[i - 1];
         }
 
-        for(int i = arr.length - 1;i >= 0; i--){ //bug i > 0 // 20分钟
+        for (int i = arr.length - 1; i >= 0; i--) { //bug i > 0 // 20分钟
 
 //            System.out.println(i +" " + (arr[i] - minInt) + " "+ arr[i] + " " + count[arr[i] - minInt]);
             result[--count[arr[i] - minInt]] = arr[i]; //result[--count[arr[i]]] = arr[i];
@@ -265,27 +275,28 @@ public class AllSort {
     }
 
     /**
-     *基数排序
+     * 基数排序
+     *
      * @param arr
      */
-    public void radixSort(int[] arr){
+    public void radixSort(int[] arr) {
         int bit = 1;
-        for(int i = 0; i< arr.length;i++){
+        for (int i = 0; i < arr.length; i++) {
             bit = String.valueOf(arr[i]).length() > bit ? String.valueOf(arr[i]).length() : bit;
         }
         int[] count = new int[10];
         int[] result = new int[arr.length];
 
-        for(int i =0;i < bit;i++){
-            int division = (int) Math.pow(10,i); // bug Math.pow(10,bit);
-            for(int j = 0; j< arr.length;j++){
-                count[arr[j] /division %10]++;
+        for (int i = 0; i < bit; i++) {
+            int division = (int) Math.pow(10, i); // bug Math.pow(10,bit);
+            for (int j = 0; j < arr.length; j++) {
+                count[arr[j] / division % 10]++;
             }
-            for(int j = 1;j<count.length;j++){
-                count[j] = count[j] + count[j-1];
+            for (int j = 1; j < count.length; j++) {
+                count[j] = count[j] + count[j - 1];
             }
-            for(int j = arr.length - 1;j >= 0; j--){
-                result[--count[arr[j] / division %10]] = arr[j];
+            for (int j = arr.length - 1; j >= 0; j--) {
+                result[--count[arr[j] / division % 10]] = arr[j];
             }
             System.arraycopy(result, 0, arr, 0, arr.length);
             Arrays.fill(count, 0);
@@ -293,46 +304,47 @@ public class AllSort {
     }
 
     /**
-     *桶排序
+     * 桶排序
+     *
      * @param arr
      */
-    public void bucketSort(int[] arr){
+    public void bucketSort(int[] arr) {
         int maxInt = arr[0];
         int minInt = arr[0];
-        for(int i = 1; i< arr.length;i++){
-            if(arr[i]<minInt) minInt = arr[i];
-            if(arr[i]>maxInt) maxInt = arr[i];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] < minInt) minInt = arr[i];
+            if (arr[i] > maxInt) maxInt = arr[i];
         }
         int[] result = new int[arr.length];
         int[] bucket = new int[10];
         var bucketSize = (maxInt - minInt) / 10;
-        if(bucketSize == 0) bucketSize = 1;
+        if (bucketSize == 0) bucketSize = 1;
 
-        for(int i = 0; i <  bucket.length; i++){
+        for (int i = 0; i < bucket.length; i++) {
             List bucketArr = new ArrayList<Integer>();
-            for(int j = 0; j < arr.length; j++){
+            for (int j = 0; j < arr.length; j++) {
                 int bucketMinInt = minInt + bucketSize * i;
                 //bug int bucketMaxInt = maxInt - bucketSize * (bucket.length - j - 1));
                 int bucketMaxInt = minInt + bucketSize * (i + 1);
                 //bug if(j == arr.length - 1){
-                if(i == bucket.length - 1){
+                if (i == bucket.length - 1) {
                     bucketMaxInt = maxInt + 1;
                 }
                 /// bug if(arr[j] >= bucketMinInt && arr[j] < bucketMaxInt){
-                if(arr[j] >= bucketMinInt && arr[j] < bucketMaxInt){
+                if (arr[j] >= bucketMinInt && arr[j] < bucketMaxInt) {
                     bucket[i]++;
                     bucketArr.add(arr[j]);
                 }
             }
             int left = 0;
-            if(i > 0){
+            if (i > 0) {
                 bucket[i] = bucket[i] + bucket[i - 1];
                 left = bucket[i - 1];
             }
 
             int right = bucket[i] - 1;
 
-            for(int j = 0; j< bucketArr.size(); j++ ){
+            for (int j = 0; j < bucketArr.size(); j++) {
                 result[left + j] = (int) bucketArr.get(j);
             }
 
@@ -343,24 +355,27 @@ public class AllSort {
 //        printArr(result);
     }
 
-    private  void swap(int[] arr, int i, int j){
+    private void swap(int[] arr, int i, int j) {
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
-    private void swap_binary(int[] arr, int i, int j){
+
+    private void swap_binary(int[] arr, int i, int j) {
         arr[i] = arr[i] ^ arr[j];
         arr[j] = arr[i] ^ arr[j];
         arr[i] = arr[i] ^ arr[j];
     }
-    private static void printArr(int[] arr){
+
+    private static void printArr(int[] arr) {
         System.out.println(Arrays.toString(arr));
     }
-    private static void printString_Arrr(int[] arr, String beforeStr){
+
+    private static void printString_Arrr(int[] arr, String beforeStr) {
         System.out.println(beforeStr + Arrays.toString(arr));
     }
 
-    public static int[] generateRandomArray(int length, int start, int end){
+    public static int[] generateRandomArray(int length, int start, int end) {
         int[] arr = new int[length];
 
         Random r = new Random();
@@ -371,11 +386,11 @@ public class AllSort {
         return arr;
     }
 
-    protected static void check(){
+    protected static void check() {
         int wrong = 0;
 
-        for(int i = 0; i < 100; i++){
-            int[] arr = generateRandomArray(10000,0,5000);
+        for (int i = 0; i < 100; i++) {
+            int[] arr = generateRandomArray(10000, 0, 5000);
 
             int[] arr2 = new int[arr.length];
             System.arraycopy(arr, 0, arr2, 0, arr.length);
@@ -384,7 +399,7 @@ public class AllSort {
 
             new AllSort().quickSort(arr2);
 
-            if(!DataChecker.check(arr, arr2))
+            if (!DataChecker.check(arr, arr2))
                 wrong++;
 
         }
@@ -392,8 +407,8 @@ public class AllSort {
 
     }
 
-    public static void sort(){
-        int[] arr = generateRandomArray(20,1,150);
+    public static void sort() {
+        int[] arr = generateRandomArray(20, 1, 150);
         //int[] arr = {2,4,6,8,10,1,3,5,7,9};
         printArr(arr);
         new AllSort().quickSort(arr);

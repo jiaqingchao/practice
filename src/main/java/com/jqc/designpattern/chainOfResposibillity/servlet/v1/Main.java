@@ -20,7 +20,7 @@ public class Main {
     }
 }
 
-class Msg{
+class Msg {
     String name;
     String msg;
 
@@ -40,7 +40,7 @@ class Msg{
     }
 }
 
-interface Filter{
+interface Filter {
     boolean doFilter(Request req, Response res);
 }
 
@@ -48,7 +48,7 @@ class HTMLFilter implements Filter {
     @Override
     public boolean doFilter(Request req, Response res) {
         String r = req.getStr();
-        r = r.replaceAll("<","[").replaceAll(">","]");
+        r = r.replaceAll("<", "[").replaceAll(">", "]");
         req.setStr(r);
         res.setStr(res.getStr() + "--HTMLFilter()");
         return true;
@@ -59,7 +59,7 @@ class SensitiveFilter implements Filter {
     @Override
     public boolean doFilter(Request req, Response res) {
         String r = req.getStr();
-        r=r.replaceAll("996", "995");
+        r = r.replaceAll("996", "995");
         req.setStr(r);
         res.setStr(res.getStr() + "--SensitiveFilter()");
         return true;
@@ -67,7 +67,7 @@ class SensitiveFilter implements Filter {
 }
 
 
-class Response{
+class Response {
     String str;
 
     public String getStr() {
@@ -85,7 +85,8 @@ class Response{
                 '}';
     }
 }
-class Request{
+
+class Request {
     String str;
 
     public String getStr() {
@@ -106,13 +107,15 @@ class Request{
 
 class FilterChain implements Filter {
     List<Filter> filters = new ArrayList<>();
-    public FilterChain add(Filter f){
+
+    public FilterChain add(Filter f) {
         filters.add(f);
         return this;
     }
-    public boolean doFilter(Request req, Response res){
-        for (Filter f: filters) {
-            if(!f.doFilter(req, res)){
+
+    public boolean doFilter(Request req, Response res) {
+        for (Filter f : filters) {
+            if (!f.doFilter(req, res)) {
                 return false;
             }
         }

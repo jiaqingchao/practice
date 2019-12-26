@@ -1,6 +1,6 @@
 package com.jqc.designpattern.command;
 
-public class DeleteCommand extends Command{
+public class DeleteCommand extends Command {
     Content c;
     String deleted;
 
@@ -10,8 +10,8 @@ public class DeleteCommand extends Command{
 
     @Override
     public void doit() {
-        deleted = c.msg.substring(0,5);
-        c.msg = c.msg.substring(5,c.msg.length());
+        deleted = c.msg.substring(0, 5);
+        c.msg = c.msg.substring(5, c.msg.length());
     }
 
     @Override

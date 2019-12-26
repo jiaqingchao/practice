@@ -11,18 +11,18 @@ public class ClassPrinter extends ClassVisitor {
 
     @Override
     public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
-        System.out.println(name + "extends" + superName+"{");
+        System.out.println(name + "extends" + superName + "{");
     }
 
     @Override
     public FieldVisitor visitField(int access, String name, String descriptor, String signature, Object valuer) {
-        System.out.println("   "+ name);
+        System.out.println("   " + name);
         return null;
     }
 
     @Override
     public MethodVisitor visitMethod(int i, String name, String s1, String s2, String[] strings) {
-        System.out.println("   "+ name + "()");
+        System.out.println("   " + name + "()");
         return null;
     }
 

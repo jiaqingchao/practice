@@ -5,7 +5,7 @@ import java.io.*;
 public class Adapter {
     public static void main(String[] args) {
         FileInputStream fis = null;
-        InputStreamReader isr= null;
+        InputStreamReader isr = null;
         BufferedReader br = null;
         try {
             fis = new FileInputStream("h:/data/test.txt");
@@ -20,23 +20,23 @@ public class Adapter {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }  finally {
+        } finally {
             try {
-                if(br != null){
+                if (br != null) {
                     br.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
             try {
-                if(isr != null){
+                if (isr != null) {
                     isr.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
             try {
-                if(fis != null){
+                if (fis != null) {
                     fis.close();
                 }
             } catch (IOException e) {

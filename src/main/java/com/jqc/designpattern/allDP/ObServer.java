@@ -12,11 +12,11 @@ public class ObServer {
     }
 }
 
-interface Event<T>{
+interface Event<T> {
     T getSource();
 }
 
-class ActionEvent implements Event<Button>{
+class ActionEvent implements Event<Button> {
     Button source;
 
     public ActionEvent(Button source) {
@@ -28,10 +28,12 @@ class ActionEvent implements Event<Button>{
         return source;
     }
 }
-interface ActionListener<E>{
+
+interface ActionListener<E> {
     void actionPerformed(E e);
 }
-class MyActionListener implements ActionListener<Event<Button>>{
+
+class MyActionListener implements ActionListener<Event<Button>> {
     @Override
     public void actionPerformed(Event<Button> e) {
         Button b = e.getSource();
@@ -39,7 +41,7 @@ class MyActionListener implements ActionListener<Event<Button>>{
     }
 }
 
-class MyActionListener2 implements ActionListener<Event<Button>>{
+class MyActionListener2 implements ActionListener<Event<Button>> {
     @Override
     public void actionPerformed(Event<Button> e) {
         Button b = e.getSource();
@@ -47,13 +49,15 @@ class MyActionListener2 implements ActionListener<Event<Button>>{
     }
 }
 
-class Button{
+class Button {
     List<ActionListener> actionListeners = new ArrayList<>();
-    public void addListener(ActionListener al){
+
+    public void addListener(ActionListener al) {
         actionListeners.add(al);
     }
-    public void pressed(){
+
+    public void pressed() {
         Event e = new ActionEvent(this);
-        actionListeners.forEach(al->al.actionPerformed(e));
+        actionListeners.forEach(al -> al.actionPerformed(e));
     }
 }

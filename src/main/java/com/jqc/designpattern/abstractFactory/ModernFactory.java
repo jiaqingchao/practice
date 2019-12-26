@@ -1,6 +1,6 @@
 package com.jqc.designpattern.abstractFactory;
 
-public class ModernFactory extends AbstractFactory{
+public class ModernFactory extends AbstractFactory {
     @Override
     Food createFood() {
         return new Bread();

@@ -1,59 +1,63 @@
 package com.jqc.designpattern.allDP;
 
-class Tank_02 extends GameObject{
+class Tank_02 extends GameObject {
     @Override
     public void paint() {
         System.out.println("created one tank");
     }
 }
-class Bullet_02 extends GameObject{
+
+class Bullet_02 extends GameObject {
     @Override
     public void paint() {
         System.out.println("created one bullet");
     }
 }
 
-interface GameFactory<G>{
+interface GameFactory<G> {
     G createGameObj();
 }
-abstract class GameObject{
+
+abstract class GameObject {
     public abstract void paint();
 }
 
-class TankFactory implements GameFactory<GameObject>{
+class TankFactory implements GameFactory<GameObject> {
     @Override
     public GameObject createGameObj() {
         return new Tank_02();
     }
 }
 
-class BulletFactory implements GameFactory<GameObject>{
+class BulletFactory implements GameFactory<GameObject> {
     @Override
     public GameObject createGameObj() {
         return new Bullet_02();
     }
 }
 
-class DefaultTank_02 extends Tank_02{
+class DefaultTank_02 extends Tank_02 {
     @Override
     public void paint() {
         System.out.println("created one DefaultTank");
     }
 }
-class DefaultBullet_02 extends Bullet_02{
+
+class DefaultBullet_02 extends Bullet_02 {
     @Override
     public void paint() {
         System.out.println("created one DefaultBullet");
     }
 }
 
-class RectTank_02 extends Tank_02{
+class RectTank_02 extends Tank_02 {
     @Override
     public void paint() {
         System.out.println("created one RectTank");
     }
 }
-class RectBullet_02 extends Bullet_02{
+
+class RectBullet_02 extends Bullet_02 {
     @Override
     public void paint() {
         System.out.println("created one RectBullet");
@@ -62,10 +66,11 @@ class RectBullet_02 extends Bullet_02{
 
 interface GameGroupFactory<T> {
     Tank_02 createTank();
+
     Bullet_02 createBullet();
 }
 
-class DefaultFactory implements GameGroupFactory{
+class DefaultFactory implements GameGroupFactory {
     @Override
     public Tank_02 createTank() {
         return new DefaultTank_02();
@@ -77,7 +82,7 @@ class DefaultFactory implements GameGroupFactory{
     }
 }
 
-class RectFactory implements GameGroupFactory{
+class RectFactory implements GameGroupFactory {
     @Override
     public Tank_02 createTank() {
         return new RectTank_02();
@@ -89,7 +94,7 @@ class RectFactory implements GameGroupFactory{
     }
 }
 
-public class AbstractFactory{
+public class AbstractFactory {
     public static void main(String[] args) {
         GameFactory<GameObject> gf = new TankFactory();
         gf.createGameObj().paint();

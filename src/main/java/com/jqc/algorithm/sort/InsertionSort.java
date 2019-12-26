@@ -4,19 +4,20 @@ import com.jqc.algorithm.sort.util.SortBase;
 
 public class InsertionSort extends SortBase {
     @Override
-    public void sort(int[] arr){//按照视频动画自己写的
-        for(int i = 1; i < arr.length; i++){
-            for(int j = i; j > 0 && arr[j - 1] > arr[j]; j--){
+    public void sort(int[] arr) {//按照视频动画自己写的
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = i; j > 0 && arr[j - 1] > arr[j]; j--) {
                 //if(arr[j - 1] > arr[j]) 判断放到for中,可以减少不必要的判断
-                    swap(arr, j, j - 1 );
+                swap(arr, j, j - 1);
 //                else continue; // 错误优化，多一步，时间变长
             }
         }
         //printArr(arr, "sort end : ");
 
     }
+
     @Override
-    public void sort2(int[] arr){//根据老师优化思路优化（百度）
+    public void sort2(int[] arr) {//根据老师优化思路优化（百度）
         insertionSort(arr, 1);
     }
 

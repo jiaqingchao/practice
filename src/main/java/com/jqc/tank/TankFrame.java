@@ -26,9 +26,9 @@ public class TankFrame extends Frame {
     public List<Bullet> bullets = new ArrayList<>();
     public List<Explode> explodes = new ArrayList<>();
 
-    public Tank redTank = new Tank(100,100,Dir.DOWN, Group.RED, this);
+    public Tank redTank = new Tank(100, 100, Dir.DOWN, Group.RED, this);
 
-    public TankFrame(){
+    public TankFrame() {
 
         setVisible(true);
         setSize(WIDTH, HEIGHT);
@@ -39,18 +39,19 @@ public class TankFrame extends Frame {
 
         addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e){
+            public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
         });
 
     }
 
-//  处理双缓冲，解决闪烁问题
+    //  处理双缓冲，解决闪烁问题
     Image offScreenImage = null;
+
     @Override
-    public void update(Graphics g){
-        if(offScreenImage == null){
+    public void update(Graphics g) {
+        if (offScreenImage == null) {
             offScreenImage = this.createImage(WIDTH, HEIGHT);
         }
         Graphics gOffScreen = offScreenImage.getGraphics();
@@ -63,10 +64,10 @@ public class TankFrame extends Frame {
     }
 
     @Override
-    public void paint(Graphics g){
+    public void paint(Graphics g) {
         paintCount(g);
 
-        if(!redTank.isLiving()){
+        if (!redTank.isLiving()) {
             //gameOver(g);
 //            return;
         }
@@ -104,41 +105,41 @@ public class TankFrame extends Frame {
     }
 
     private void paintExplode(Graphics g) {
-        for(ListIterator<Explode> blastIterator = explodes.listIterator(); blastIterator.hasNext();){
+        for (ListIterator<Explode> blastIterator = explodes.listIterator(); blastIterator.hasNext(); ) {
             Explode explode = blastIterator.next();
             explode.paint(g);
-            if(!explode.isLiving()) blastIterator.remove();
+            if (!explode.isLiving()) blastIterator.remove();
         }
     }
 
     private void paintBullet(Graphics g) {
-        for(ListIterator<Bullet> bulletIterator = bullets.listIterator(); bulletIterator.hasNext();){
+        for (ListIterator<Bullet> bulletIterator = bullets.listIterator(); bulletIterator.hasNext(); ) {
             Bullet bullet = bulletIterator.next();
             bullet.paint(g);
-            if(!bullet.isLiving()) bulletIterator.remove();
+            if (!bullet.isLiving()) bulletIterator.remove();
         }
     }
 
     private void paintTank(Graphics g) {
-        for(ListIterator<Tank> tankListIterator = tanks.listIterator(); tankListIterator.hasNext();){
+        for (ListIterator<Tank> tankListIterator = tanks.listIterator(); tankListIterator.hasNext(); ) {
             Tank tank = tankListIterator.next();
             tank.paint(g);
-            if(!tank.isLiving()) tankListIterator.remove(); // ConcurrentModificationException   //异步新增tank,数量对不上，导致报错
+            if (!tank.isLiving()) tankListIterator.remove(); // ConcurrentModificationException   //异步新增tank,数量对不上，导致报错
         }
     }
 
     private void collisonCheck() {
-        for(ListIterator<Bullet> bulletIterator = bullets.listIterator(); bulletIterator.hasNext();){
+        for (ListIterator<Bullet> bulletIterator = bullets.listIterator(); bulletIterator.hasNext(); ) {
             Bullet bullet = bulletIterator.next();
             bullet.collisionWidth(redTank);
-            for(ListIterator<Tank> tankListIterator = tanks.listIterator(); tankListIterator.hasNext();){
+            for (ListIterator<Tank> tankListIterator = tanks.listIterator(); tankListIterator.hasNext(); ) {
                 bullet.collisionWidth(tankListIterator.next());
             }
 
         }
     }
 
-    class MyKeyListener extends KeyAdapter{
+    class MyKeyListener extends KeyAdapter {
 
         boolean bL;
         boolean bU;
@@ -148,14 +149,14 @@ public class TankFrame extends Frame {
         @Override
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
-            switch (key){
+            switch (key) {
                 case KeyEvent.VK_LEFT:
                     bL = true;
                     break;
                 case KeyEvent.VK_UP:
                     bU = true;
                     break;
-                case  KeyEvent.VK_RIGHT:
+                case KeyEvent.VK_RIGHT:
                     bR = true;
                     break;
                 case KeyEvent.VK_DOWN:
@@ -170,14 +171,14 @@ public class TankFrame extends Frame {
         @Override
         public void keyReleased(KeyEvent e) {
             int key = e.getKeyCode();
-            switch (key){
+            switch (key) {
                 case KeyEvent.VK_LEFT:
                     bL = false;
                     break;
                 case KeyEvent.VK_UP:
                     bU = false;
                     break;
-                case  KeyEvent.VK_RIGHT:
+                case KeyEvent.VK_RIGHT:
                     bR = false;
                     break;
                 case KeyEvent.VK_DOWN:
@@ -191,14 +192,14 @@ public class TankFrame extends Frame {
             setMainTankDir(redTank);
         }
 
-        private void setMainTankDir(Tank tank){
-            if(!bL && !bU && !bR && !bD) tank.setMoving(false);
+        private void setMainTankDir(Tank tank) {
+            if (!bL && !bU && !bR && !bD) tank.setMoving(false);
             else tank.setMoving(true);
 
-            if(bL) tank.setDir(Dir.LEFT);
-            if(bU) tank.setDir(Dir.UP);
-            if(bR) tank.setDir(Dir.RIGHT);
-            if(bD) tank.setDir(Dir.DOWN);
+            if (bL) tank.setDir(Dir.LEFT);
+            if (bU) tank.setDir(Dir.UP);
+            if (bR) tank.setDir(Dir.RIGHT);
+            if (bD) tank.setDir(Dir.DOWN);
         }
     }
 

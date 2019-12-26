@@ -20,7 +20,7 @@ public class Main {
     }
 }
 
-class Msg{
+class Msg {
     String name;
     String msg;
 
@@ -40,17 +40,17 @@ class Msg{
     }
 }
 
-interface Filter{
+interface Filter {
     boolean doFilter(Request req, Response res, FilterChain chain);
 }
 
 class HTMLFilter implements Filter {
     @Override
-    public boolean doFilter(Request req, Response res,FilterChain chain) {
+    public boolean doFilter(Request req, Response res, FilterChain chain) {
         String r = req.getStr();
-        r = r.replaceAll("<","[").replaceAll(">","]")+ "HTMLFilter()";
+        r = r.replaceAll("<", "[").replaceAll(">", "]") + "HTMLFilter()";
         req.setStr(r);
-        chain.doFilter(req,res);
+        chain.doFilter(req, res);
         res.setStr(res.getStr() + "--HTMLFilter()");
         return true;
     }
@@ -60,16 +60,16 @@ class SensitiveFilter implements Filter {
     @Override
     public boolean doFilter(Request req, Response res, FilterChain chain) {
         String r = req.getStr();
-        r=r.replaceAll("996", "995") + "SensitiveFilter()";
+        r = r.replaceAll("996", "995") + "SensitiveFilter()";
         req.setStr(r);
-        chain.doFilter(req,res);
+        chain.doFilter(req, res);
         res.setStr(res.getStr() + "--SensitiveFilter()");
         return true;
     }
 }
 
 
-class Response{
+class Response {
     String str;
 
     public String getStr() {
@@ -88,7 +88,7 @@ class Response{
     }
 }
 
-class Request{
+class Request {
     String str;
 
     public String getStr() {
@@ -107,18 +107,20 @@ class Request{
     }
 }
 
-class FilterChain{
+class FilterChain {
     List<Filter> filters = new ArrayList<>();
     int index = 0;
-    public FilterChain add(Filter f){
+
+    public FilterChain add(Filter f) {
         filters.add(f);
         return this;
     }
-    public boolean doFilter(Request req, Response res){
-        if(index == filters.size())return false;
+
+    public boolean doFilter(Request req, Response res) {
+        if (index == filters.size()) return false;
         Filter f = filters.get(index);
         index++;
-        return f.doFilter(req,res, this);
+        return f.doFilter(req, res, this);
     }
 
 }

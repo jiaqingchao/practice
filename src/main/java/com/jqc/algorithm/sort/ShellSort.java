@@ -14,20 +14,20 @@ public class ShellSort extends SortBase {
         //int gap = arr.length / 2;// 希尔的想法
         int gap = arr.length / 2;//我的想法
 
-        for (int nowGap = 0; nowGap < gap; nowGap++){ // 根据老师说的希尔排序思路写出
+        for (int nowGap = 0; nowGap < gap; nowGap++) { // 根据老师说的希尔排序思路写出
             // 用i++， 后边的用的判断可以不要，优化后为sort2
-            for(int i = nowGap; i < arr.length; i += gap){
+            for (int i = nowGap; i < arr.length; i += gap) {
                 int j;
                 int temp = arr[i];
 
-                for(j = i; j > gap - 1 && temp < arr[j - gap]; j -= gap){
+                for (j = i; j > gap - 1 && temp < arr[j - gap]; j -= gap) {
                     arr[j] = arr[j - gap];
                 }
                 arr[j] = temp;
             }
 
-            if(nowGap + 1 == gap){ // 多余的操作，可以放在最外层循环
-                gap =  gap >> 2;
+            if (nowGap + 1 == gap) { // 多余的操作，可以放在最外层循环
+                gap = gap >> 2;
                 nowGap = -1;
             }
         }
@@ -49,7 +49,7 @@ public class ShellSort extends SortBase {
 
         // knuth 间隔序列
         int h = 1;
-        while(h <= arr.length/3){
+        while (h <= arr.length / 3) {
             h = h * 3 + 1;
         }
 

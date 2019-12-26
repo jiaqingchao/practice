@@ -19,13 +19,15 @@ public class HelloNetty {
         new NettyServer(8888).serverStart();
     }
 }
-class NettyServer{
+
+class NettyServer {
     int port = 8888;
 
     public NettyServer(int port) {
         this.port = port;
     }
-    public void serverStart(){
+
+    public void serverStart() {
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         ServerBootstrap b = new ServerBootstrap();//此实例是netty服务端应用开发的入口
@@ -44,13 +46,14 @@ class NettyServer{
             f.channel().closeFuture().sync();//close() -> ChannelFuture,  //ChannelFuture调用close()时执行
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
         }
     }
 }
-class Handler extends ChannelInboundHandlerAdapter{
+
+class Handler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         HelloNetty.cliens.add(ctx.channel());

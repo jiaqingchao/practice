@@ -5,11 +5,12 @@ class Child {
     private Dad dad = new Dad();
     private Mum mum = new Mum();
     private Dog dog = new Dog();
+
     public boolean isCry() {
         return cry;
     }
 
-    public void wakeUp(){
+    public void wakeUp() {
         cry = true;
         dad.feed();
         mum.hug();
@@ -17,18 +18,20 @@ class Child {
     }
 }
 
-class Dad{
-    public void feed(){
+class Dad {
+    public void feed() {
         System.out.println("Dad feeding...");
     }
 }
-class Mum{
-    public void hug(){
+
+class Mum {
+    public void hug() {
         System.out.println("Mum hugging...");
     }
 }
-class Dog{
-    public void wang(){
+
+class Dog {
+    public void wang() {
         System.out.println("Dog wang...");
     }
 }

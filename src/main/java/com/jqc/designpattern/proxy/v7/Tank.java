@@ -6,7 +6,7 @@ import java.lang.reflect.Proxy;
 import java.util.Random;
 
 /**
- *问题：我想记录坦克的移动时间
+ * 问题：我想记录坦克的移动时间
  * 最简单的办法，修改代码，记录时间
  * 问题2:如果无法改变方法源码呢？ benchmark--性能测试
  * 用继承？
@@ -40,13 +40,13 @@ public class Tank implements Movable {
         Tank tank = new Tank();
         //reflection 通过二进制字节码分享类的属性和方法
         Movable m = (Movable) Proxy.newProxyInstance(Tank.class.getClassLoader(),
-            new Class[]{Movable.class},
+                new Class[]{Movable.class},
                 new TimeProxy(tank));
         m.move();
-     }
+    }
 }
 
-class TimeProxy implements InvocationHandler{
+class TimeProxy implements InvocationHandler {
     Tank tank;
 
     public TimeProxy(Tank tank) {
@@ -62,6 +62,6 @@ class TimeProxy implements InvocationHandler{
     }
 }
 
-interface Movable{
+interface Movable {
     void move();
 }

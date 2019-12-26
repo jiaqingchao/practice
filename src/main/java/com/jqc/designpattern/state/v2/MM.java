@@ -3,13 +3,16 @@ package com.jqc.designpattern.state.v2;
 public class MM {
     String name;
     MMState state;
-    public void smile(){
+
+    public void smile() {
         state.smile();
     }
-    public void cry(){
+
+    public void cry() {
         state.cry();
     }
-    public void say(){
+
+    public void say() {
         state.say();
     }
 }

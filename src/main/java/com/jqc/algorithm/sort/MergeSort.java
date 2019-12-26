@@ -6,19 +6,19 @@ public class MergeSort extends SortBase {
     @Override
     public void sort(int[] arr) { // 再看视频前写的，没有写出
         //arr = new int[]{1, 3, 6, 7, 2, 4, 5, 8, 9};
-       // mergeSort(arr);
-        mergeSort(arr, 0,arr.length -1);
+        // mergeSort(arr);
+        mergeSort(arr, 0, arr.length - 1);
 //        printArr(arr, "sort end : ");
 //        printArr(arr, "sort end : ");
 
     }
 
-   // public int[] mergeSort(int[] arr){
-    public void mergeSort(int[] arr, int left, int right){
+    // public int[] mergeSort(int[] arr){
+    public void mergeSort(int[] arr, int left, int right) {
 
 //        if (checkArrShortAndSwap(arr))
 //            return arr;
-        if(left == right)
+        if (left == right)
             return;
 
         //mergeArr(arr);
@@ -26,13 +26,13 @@ public class MergeSort extends SortBase {
 //        int mid = arr.length >> 1;
 //        int[] temp = new int[arr.length];
 
-        int mid = left + (right - left)/2;
-        mergeSort(arr , left , mid);
-        mergeSort(arr , mid + 1 , right);
+        int mid = left + (right - left) / 2;
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
 
-       // mergeArr(arr, left, mid+1 , right);
+        // mergeArr(arr, left, mid+1 , right);
 
-        mergeArr(arr, left,mid + 1,  right);
+        mergeArr(arr, left, mid + 1, right);
     }
 
     private void mergeArr(int[] arr, int leftPtr, int rightPtr, int rightBound) {
@@ -42,17 +42,17 @@ public class MergeSort extends SortBase {
         int j = rightPtr;
         int k = 0;
 
-        while (i <= rightPtr - 1 && j <= rightBound){
-            if(arr[i] <= arr[j]){
+        while (i <= rightPtr - 1 && j <= rightBound) {
+            if (arr[i] <= arr[j]) {
                 temp[k++] = arr[i++];
-            }else{
+            } else {
                 temp[k++] = arr[j++];
             }
         }
-        while (i <= rightPtr - 1){
+        while (i <= rightPtr - 1) {
             temp[k++] = arr[i++];
         }
-        while (j <= rightBound){
+        while (j <= rightBound) {
             temp[k++] = arr[j++];
         }
 
@@ -60,7 +60,7 @@ public class MergeSort extends SortBase {
 //        arr = temp;
 //        printArr(arr, "sort end : ");
 //        return temp;
-        for(int m = 0;m<temp.length;m++){
+        for (int m = 0; m < temp.length; m++) {
             arr[leftPtr + m] = temp[m];
         }
     }
@@ -99,8 +99,8 @@ public class MergeSort extends SortBase {
 //        printArr(arr, "sort end : ");
     }
 
-    public void mergeSort2(int[] arr, int left, int right){ // 看视频写出
-        if(left == right)
+    public void mergeSort2(int[] arr, int left, int right) { // 看视频写出
+        if (left == right)
             return;
 
         int mid = left + (right - left) / 2;
@@ -112,7 +112,7 @@ public class MergeSort extends SortBase {
 
     }
 
-    public void mergeArr2(int[] arr, int leftPtr, int rightPtr, int rightBound){
+    public void mergeArr2(int[] arr, int leftPtr, int rightPtr, int rightBound) {
 
         int[] temp = new int[rightBound - leftPtr + 1];
 
@@ -120,21 +120,21 @@ public class MergeSort extends SortBase {
         int j = rightPtr;
         int k = 0;
 
-        while (i <= rightPtr - 1 && j <= rightBound){
-            if(arr[i] <= arr[j]){
+        while (i <= rightPtr - 1 && j <= rightBound) {
+            if (arr[i] <= arr[j]) {
                 temp[k++] = arr[i++];
-            }else{
+            } else {
                 temp[k++] = arr[j++];
             }
         }
-        while (i <= rightPtr - 1){
+        while (i <= rightPtr - 1) {
             temp[k++] = arr[i++];
         }
-        while (j <= rightBound){
+        while (j <= rightBound) {
             temp[k++] = arr[j++];
         }
 
-        for(int m = 0; m < temp.length; m++){
+        for (int m = 0; m < temp.length; m++) {
             arr[leftPtr + m] = temp[m];
         }
 
@@ -142,11 +142,11 @@ public class MergeSort extends SortBase {
 
     @Override
     public void sort3(int[] arr) { // 看视频后独立写出
-        mergeSort3(arr,0, arr.length - 1);
+        mergeSort3(arr, 0, arr.length - 1);
     }
 
-    private void mergeSort3(int[] arr ,int left, int right) {
-        if(left == right) return; //这个的位置看了代码
+    private void mergeSort3(int[] arr, int left, int right) {
+        if (left == right) return; //这个的位置看了代码
 
         int mid = left + (right - left) / 2; //防止溢出
         //int mid = (right + left) / 2;
@@ -155,28 +155,29 @@ public class MergeSort extends SortBase {
 
         mergeArr3(arr, left, mid + 1, right);
     }
-    private void mergeArr3(int[] arr, int leftPtr, int rightPtr, int rightBound){
+
+    private void mergeArr3(int[] arr, int leftPtr, int rightPtr, int rightBound) {
 
         int[] temp = new int[rightBound - leftPtr + 1];
         int i = leftPtr;
         int j = rightPtr;
         int k = 0;
 
-        while(i <= rightPtr - 1 && j <= rightBound){
-            if(arr[i] <= arr[j]){ // 之前不是<=,第二天改回
+        while (i <= rightPtr - 1 && j <= rightBound) {
+            if (arr[i] <= arr[j]) { // 之前不是<=,第二天改回
                 temp[k++] = arr[i++];
-            }else {
+            } else {
                 temp[k++] = arr[j++];
             }
 
         }
-        while(i <= rightPtr - 1){
+        while (i <= rightPtr - 1) {
             temp[k++] = arr[i++];
         }
-        while(j <= rightBound){
+        while (j <= rightBound) {
             temp[k++] = arr[j++];
         }
-        for(int m = 0; m < temp.length; m++){
+        for (int m = 0; m < temp.length; m++) {
             arr[leftPtr + m] = temp[m];
         }
     }

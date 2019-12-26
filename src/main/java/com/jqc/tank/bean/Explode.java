@@ -15,10 +15,10 @@ public class Explode {
     private int step = 0;
     private boolean living = true;
 
-    public Explode(int x, int y){
+    public Explode(int x, int y) {
         this.x = x;
         this.y = y;
-        new Thread(()->new Audio("audio/explode.wav").play()).start();
+        new Thread(() -> new Audio("audio/explode.wav").play()).start();
     }
 
     public boolean isLiving() {
@@ -26,12 +26,12 @@ public class Explode {
     }
 
     public void paint(Graphics g) {
-        if(!isLiving()){
+        if (!isLiving()) {
             return;
         }
-        g.drawImage(ResourceMgr.explodes[step++], this.x, this.y,null);
+        g.drawImage(ResourceMgr.explodes[step++], this.x, this.y, null);
 
-        if(step >= ResourceMgr.explodes.length){
+        if (step >= ResourceMgr.explodes.length) {
             living = false;
         }
     }

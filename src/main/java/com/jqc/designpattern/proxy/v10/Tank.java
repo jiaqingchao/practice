@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
- *问题：我想记录坦克的移动时间
+ * 问题：我想记录坦克的移动时间
  * 最简单的办法，修改代码，记录时间
  * 问题2:如果无法改变方法源码呢？ benchmark--性能测试
  * 用继承？
@@ -60,13 +60,13 @@ public class Tank implements Movable {
         Method[] methods = Movable.class.getMethods();
 
         System.out.println(Arrays.toString(methods));
-        for(Method method : methods){
+        for (Method method : methods) {
             method.invoke(m);
         }
-     }
+    }
 }
 
-class TimeProxy implements InvocationHandler{
+class TimeProxy implements InvocationHandler {
     Tank tank;
 
     public TimeProxy(Tank tank) {
@@ -75,15 +75,15 @@ class TimeProxy implements InvocationHandler{
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        if(method.getName().equals("move")){
+        if (method.getName().equals("move")) {
             before();
-        }else if(method.getName().equals("move2")){
+        } else if (method.getName().equals("move2")) {
             beforeTime();
         }
         Object o = method.invoke(tank, args);
-        if(method.getName().equals("move")){
+        if (method.getName().equals("move")) {
             after();
-        }else if(method.getName().equals("move2")){
+        } else if (method.getName().equals("move2")) {
             afterTime();
         }
         return o;
@@ -96,6 +96,7 @@ class TimeProxy implements InvocationHandler{
     private void before() {
         System.out.println("method start..");
     }
+
     private void afterTime() {
         System.out.println(System.currentTimeMillis());
     }
@@ -105,7 +106,8 @@ class TimeProxy implements InvocationHandler{
     }
 }
 
-interface Movable{
+interface Movable {
     void move();
+
     void move2();
 }

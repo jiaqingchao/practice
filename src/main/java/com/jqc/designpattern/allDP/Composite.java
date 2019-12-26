@@ -25,51 +25,57 @@ public class Composite {
         Branch f1111 = new Branch("f1111");
         c111.add(f1111);
 
-        printNode(root,0);
+        printNode(root, 0);
     }
-    public static void printNode(Node n, int layer){
-        for(int i = 0;i < layer;i++){
+
+    public static void printNode(Node n, int layer) {
+        for (int i = 0; i < layer; i++) {
             System.out.print("--");
         }
         n.print();
-        if(n instanceof Branch){
-            Branch b = (Branch)n;
+        if (n instanceof Branch) {
+            Branch b = (Branch) n;
             layer++;
-            for (Node node: b.nodes) {
+            for (Node node : b.nodes) {
                 printNode(node, layer);
             }
         }
     }
 
 }
-abstract class Node{
+
+abstract class Node {
     public abstract void print();
 }
-class Branch extends Node{
+
+class Branch extends Node {
     List<Node> nodes = new ArrayList<>();
     String name;
 
     public Branch(String name) {
         this.name = name;
     }
+
     @Override
-    public void print(){
+    public void print() {
         System.out.println(name);
     }
 
-    public Branch add(Node n){
+    public Branch add(Node n) {
         nodes.add(n);
         return this;
     }
 }
-class File_ extends Node{
+
+class File_ extends Node {
     String name;
 
     public File_(String name) {
         this.name = name;
     }
+
     @Override
-    public void print(){
+    public void print() {
         System.out.println(name);
     }
 

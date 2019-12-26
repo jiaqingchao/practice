@@ -3,17 +3,19 @@ package com.jqc.designpattern.observer.v3;
 class Child {
     private boolean cry = false;
     private Dad d = new Dad();
+
     public boolean isCry() {
         return cry;
     }
 
-    public void wakeUp(){
+    public void wakeUp() {
         cry = true;
         d.feed();
     }
 }
-class Dad{
-    public void feed(){
+
+class Dad {
+    public void feed() {
         System.out.println("Dad feeding...");
     }
 }

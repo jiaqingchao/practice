@@ -10,9 +10,9 @@ public class SelectionSort extends SortBase {
     // O(n^2)
     // 根据视频思路，自己写的（未看完视频，多花了半个小时）
     @Override
-    public void sort(int[] arr){
+    public void sort(int[] arr) {
         //   1          1                  n - 1        n
-        for (int i = 0, len = arr.length; i < len - 1; i++){
+        for (int i = 0, len = arr.length; i < len - 1; i++) {
             int minPos = i;
 
             for (int j = i + 1; j < len; j++) {
@@ -22,20 +22,21 @@ public class SelectionSort extends SortBase {
         }
         //printArr(arr, "sort end : ");
     }
+
     @Override
-    public void sort2(int[] arr){// 根据优化思路，自己写的
-        for (int i = 0,len = arr.length; i < len / 2; i++){
+    public void sort2(int[] arr) {// 根据优化思路，自己写的
+        for (int i = 0, len = arr.length; i < len / 2; i++) {
 
             int minPos = i;
             int maxPos = len - i - 1;
 
-            for(int j = i + 1; j < len - i; j++){
+            for (int j = i + 1; j < len - i; j++) {
                 minPos = arr[j] < arr[minPos] ? j : minPos;
             }
 
             swap(arr, i, minPos);
 
-            for(int j = len - i - 2 ; j >= i; j--){
+            for (int j = len - i - 2; j >= i; j--) {
                 maxPos = arr[j] > arr[maxPos] ? j : maxPos;
             }
 
@@ -45,16 +46,16 @@ public class SelectionSort extends SortBase {
         //printArr(arr, "sort2 end : ");
     }
 
-    public void sort4(int[] arr){ // 证明排序不稳定性
+    public void sort4(int[] arr) { // 证明排序不稳定性
 
-        arr = new int[]{5,1,5,4,3};
+        arr = new int[]{5, 1, 5, 4, 3};
 
         int[] posArr = new int[arr.length];
-        for (int i = 0, len = arr.length; i < len; i++){
+        for (int i = 0, len = arr.length; i < len; i++) {
             posArr[i] = i;
         }
 
-        for (int i = 0, len = arr.length; i < len - 1; i++){
+        for (int i = 0, len = arr.length; i < len - 1; i++) {
 
             int minPos = i;
 

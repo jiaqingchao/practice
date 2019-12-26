@@ -3,7 +3,7 @@ package com.jqc.designpattern.spring.v1;
 import java.util.Random;
 
 public class Tank {
-    public void move(){
+    public void move() {
         System.out.println("Tank moving claclacal...");
         try {
             Thread.sleep(new Random().nextInt(10000));

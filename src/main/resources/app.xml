@@ -4,8 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <bean id ="tank" class="com.jqc.designpattern.spring.v1.Tank"/>
-    <bean id ="timeProxy" class="com.jqc.designpattern.spring.v1.TimeProxy"/>
+    <bean id="tank" class="com.jqc.designpattern.spring.v1.Tank"/>
+    <bean id="timeProxy" class="com.jqc.designpattern.spring.v1.TimeProxy"/>
 
     <aop:config>
         <aop:aspect id="time" ref="timeProxy">

@@ -9,7 +9,7 @@ import java.nio.channels.CompletionHandler;
 
 public class Server {
     public static void main(String[] args) {
-        try{
+        try {
             final AsynchronousServerSocketChannel serverChannel = AsynchronousServerSocketChannel.open()
                     .bind(new InetSocketAddress(8888));
 
@@ -24,7 +24,7 @@ public class Server {
                             @Override
                             public void completed(Integer result, ByteBuffer attachment) {
                                 attachment.flip();
-                                System.out.println(new String(attachment.array(),0,result));
+                                System.out.println(new String(attachment.array(), 0, result));
                                 client.write(ByteBuffer.wrap("HelloClient".getBytes()));
                             }
 
@@ -43,10 +43,10 @@ public class Server {
                     exc.printStackTrace();
                 }
             });
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        while (true){
+        while (true) {
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {

@@ -5,7 +5,7 @@ import java.io.*;
 public class Mementto {
 
     public static void main(String[] args) {
-        Tank2 t = new Tank2(10,15);
+        Tank2 t = new Tank2(10, 15);
         System.out.println(t);
         save(t);
         t.x = 11;
@@ -25,16 +25,16 @@ public class Mementto {
             oos.flush();
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
-                if(oos !=null){
+                if (oos != null) {
                     oos.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
             try {
-                if(fos !=null){
+                if (fos != null) {
                     fos.close();
                 }
 
@@ -54,16 +54,16 @@ public class Mementto {
             t = (Tank2) ois.readObject();
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
-                if(ois !=null){
+                if (ois != null) {
                     ois.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
             try {
-                if(fis !=null){
+                if (fis != null) {
                     fis.close();
                 }
 
@@ -76,8 +76,8 @@ public class Mementto {
 
 }
 
-class Tank2 implements Serializable{
-    int x,y;
+class Tank2 implements Serializable {
+    int x, y;
 
     public Tank2(int x, int y) {
         this.x = x;

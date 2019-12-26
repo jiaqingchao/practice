@@ -6,8 +6,10 @@ public class ClosedState extends CarState_ {
     public ClosedState(Car c) {
         this.c = c;
     }
+
     public ClosedState() {
     }
+
     @Override
     void open() {
         c.state = new OpenedState(c);

@@ -23,7 +23,7 @@ public class Main {
     }
 }
 
-class Msg{
+class Msg {
     String name;
     String msg;
 
@@ -43,31 +43,32 @@ class Msg{
     }
 }
 
-interface Filter{
+interface Filter {
     boolean doFilter(Msg m);
 }
-class HTMLFilter implements Filter{
+
+class HTMLFilter implements Filter {
     @Override
     public boolean doFilter(Msg m) {
         String r = m.getMsg();
-        r = r.replace("<","[");
-        r = r.replace(">","]");
+        r = r.replace("<", "[");
+        r = r.replace(">", "]");
         m.setMsg(r);
         return true;
     }
 }
 
-class SensitiveFilter implements Filter{
+class SensitiveFilter implements Filter {
     @Override
     public boolean doFilter(Msg m) {
         String r = m.getMsg();
-        r=r.replaceAll("996", "995");
+        r = r.replaceAll("996", "995");
         m.setMsg(r);
         return false;
     }
 }
 
-class FaceFilter implements Filter{
+class FaceFilter implements Filter {
     @Override
     public boolean doFilter(Msg m) {
         String r = m.getMsg();
@@ -77,7 +78,7 @@ class FaceFilter implements Filter{
     }
 }
 
-class UrlFilter implements Filter{
+class UrlFilter implements Filter {
     @Override
     public boolean doFilter(Msg m) {
         String r = m.getMsg();
@@ -87,15 +88,17 @@ class UrlFilter implements Filter{
     }
 }
 
-class FilterChain implements Filter{
+class FilterChain implements Filter {
     List<Filter> filters = new ArrayList<>();
-    public FilterChain add(Filter f){
+
+    public FilterChain add(Filter f) {
         filters.add(f);
         return this;
     }
-    public boolean doFilter(Msg msg){
-        for (Filter f: filters) {
-            if(!f.doFilter(msg)){
+
+    public boolean doFilter(Msg msg) {
+        for (Filter f : filters) {
+            if (!f.doFilter(msg)) {
                 return false;
             }
         }

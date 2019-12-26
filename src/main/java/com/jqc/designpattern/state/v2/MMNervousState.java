@@ -1,6 +1,6 @@
 package com.jqc.designpattern.state.v2;
 
-public class MMNervousState extends MMState{
+public class MMNervousState extends MMState {
 
     @Override
     void smile() {

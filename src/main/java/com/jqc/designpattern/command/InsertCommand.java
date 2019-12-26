@@ -10,11 +10,11 @@ public class InsertCommand extends Command {
 
     @Override
     public void doit() {
-        c.msg +=  strToInsert;
+        c.msg += strToInsert;
     }
 
     @Override
     public void undo() {
-        c.msg = c.msg.substring(0,c.msg.length() - strToInsert.length());
+        c.msg = c.msg.substring(0, c.msg.length() - strToInsert.length());
     }
 }

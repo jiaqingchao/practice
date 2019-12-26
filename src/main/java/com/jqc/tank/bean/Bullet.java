@@ -52,18 +52,18 @@ public class Bullet {
     }
 
     private void paintBullet(Graphics g) {
-        switch (this.dir){
-            case LEFT :
-                g.drawImage(ResourceMgr.bulletL, this.x, this.y,null);
+        switch (this.dir) {
+            case LEFT:
+                g.drawImage(ResourceMgr.bulletL, this.x, this.y, null);
                 break;
-            case UP :
-                g.drawImage(ResourceMgr.bulletU, this.x, this.y,null);
+            case UP:
+                g.drawImage(ResourceMgr.bulletU, this.x, this.y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.bulletR, this.x, this.y,null);
+                g.drawImage(ResourceMgr.bulletR, this.x, this.y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.bulletD, this.x, this.y,null);
+                g.drawImage(ResourceMgr.bulletD, this.x, this.y, null);
                 break;
             default:
                 break;
@@ -81,17 +81,18 @@ public class Bullet {
     }
 
     private void setXYForDirSpeed() {
-        switch (this.dir){
-            case LEFT :
+        switch (this.dir) {
+            case LEFT:
                 this.x -= this.speed;
                 break;
-            case UP :
+            case UP:
                 this.y -= this.speed;
                 break;
             case RIGHT:
                 this.x += this.speed;
                 break;
-            case DOWN: this.y += this.speed;
+            case DOWN:
+                this.y += this.speed;
                 break;
             default:
                 break;
@@ -99,22 +100,22 @@ public class Bullet {
     }
 
     private void boudsCheck() {
-        if(this.x < 0 || this.x > TankFrame.WIDTH
-                || this.y < 0 || this.y > TankFrame.HEIGHT){
+        if (this.x < 0 || this.x > TankFrame.WIDTH
+                || this.y < 0 || this.y > TankFrame.HEIGHT) {
             this.die();
         }
     }
 
     public void collisionWidth(Tank tank) {
 
-        if(this.group == tank.getGroup()){
+        if (this.group == tank.getGroup()) {
             return;
         }
 
         Rectangle tankRect = tank.getRectangle();
         Rectangle bulletRect = this.getRectangle();
 
-        if(bulletRect.intersects(tankRect)){
+        if (bulletRect.intersects(tankRect)) {
             this.die();
             tank.die();
         }

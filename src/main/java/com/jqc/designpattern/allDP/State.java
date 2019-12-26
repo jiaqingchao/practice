@@ -13,8 +13,10 @@ public class State {
         c.open();
     }
 }
-class Car2{
+
+class Car2 {
     CarState state;
+
     public Car2() {
     }
 
@@ -38,14 +40,18 @@ class Car2{
         state.stop();
     }
 }
-abstract class CarState{
+
+abstract class CarState {
     public abstract void open();
+
     public abstract void close();
+
     public abstract void run();
+
     public abstract void stop();
 }
 
-class ClosedState extends CarState{
+class ClosedState extends CarState {
     Car2 c;
 
     public ClosedState(Car2 c) {
@@ -74,12 +80,14 @@ class ClosedState extends CarState{
         System.out.println("is closed");
     }
 }
-class OpenedState extends CarState{
+
+class OpenedState extends CarState {
     Car2 c;
 
     public OpenedState(Car2 c) {
         this.c = c;
     }
+
     @Override
     public void open() {
         System.out.println("is opened");
@@ -101,12 +109,14 @@ class OpenedState extends CarState{
         System.out.println("is opened");
     }
 }
-class RuningState extends CarState{
+
+class RuningState extends CarState {
     Car2 c;
 
     public RuningState(Car2 c) {
         this.c = c;
     }
+
     @Override
     public void open() {
         System.out.println("is runing");
@@ -128,12 +138,14 @@ class RuningState extends CarState{
         System.out.println("runing to stoped");
     }
 }
-class StopedState extends CarState{
+
+class StopedState extends CarState {
     Car2 c;
 
     public StopedState(Car2 c) {
         this.c = c;
     }
+
     @Override
     public void open() {
         c.setState(new OpenedState(c));
@@ -146,7 +158,8 @@ class StopedState extends CarState{
     }
 
     @Override
-    public void run() {c.setState(new RuningState(c));
+    public void run() {
+        c.setState(new RuningState(c));
         System.out.println("stoped to runing");
     }
 

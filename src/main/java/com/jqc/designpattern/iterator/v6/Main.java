@@ -14,12 +14,12 @@ public class Main {
 
     public static void main(String[] args) {
         Collection list = new ArrayList<String>();
-        for(int i = 0; i < 15; i++){
-            list.add(new String("s"+i));
+        for (int i = 0; i < 15; i++) {
+            list.add(new String("s" + i));
         }
         System.out.println(list.size());
         Iterator i = list.iterator();
-        while (i.hasNext()){
+        while (i.hasNext()) {
             Object o = i.next();
             System.out.println(o);
         }

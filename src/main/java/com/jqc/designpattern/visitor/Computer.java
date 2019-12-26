@@ -4,7 +4,8 @@ public class Computer {
     ComputerPart cpu = new CPU();
     ComputerPart memory = new Memory();
     ComputerPart board = new Board();
-    public void accept(Visitor v){
+
+    public void accept(Visitor v) {
         this.cpu.accept(v);
         this.memory.accept(v);
         this.board.accept(v);
@@ -16,11 +17,14 @@ public class Computer {
         System.out.println(v.getTotalPrive());
     }
 }
-abstract class ComputerPart{
+
+abstract class ComputerPart {
     abstract void accept(Visitor v);
+
     abstract double getPrice();
 }
-class CPU extends ComputerPart{
+
+class CPU extends ComputerPart {
     @Override
     void accept(Visitor v) {
         v.visitCpu(this);
@@ -31,7 +35,8 @@ class CPU extends ComputerPart{
         return 500;
     }
 }
-class Memory extends ComputerPart{
+
+class Memory extends ComputerPart {
 
     @Override
     void accept(Visitor v) {
@@ -43,7 +48,8 @@ class Memory extends ComputerPart{
         return 300;
     }
 }
-class Board extends ComputerPart{
+
+class Board extends ComputerPart {
 
     @Override
     void accept(Visitor v) {
@@ -55,14 +61,19 @@ class Board extends ComputerPart{
         return 200;
     }
 }
-abstract class Visitor{
+
+abstract class Visitor {
 
     abstract void visitCpu(CPU cpu);
+
     abstract void visitMemory(Memory memory);
+
     abstract void visitBoard(Board board);
+
     abstract double getTotalPrive();
 }
-class PersonelVisitor extends Visitor{
+
+class PersonelVisitor extends Visitor {
     public double totalPrive = 0;
 
     @Override
@@ -77,7 +88,7 @@ class PersonelVisitor extends Visitor{
 
     @Override
     void visitBoard(Board board) {
-        totalPrive += board.getPrice() *0.95;
+        totalPrive += board.getPrice() * 0.95;
     }
 
     @Override
@@ -85,7 +96,8 @@ class PersonelVisitor extends Visitor{
         return totalPrive;
     }
 }
-class CorpVisitor extends Visitor{
+
+class CorpVisitor extends Visitor {
     public double totalPrive = 0;
 
     @Override
@@ -100,7 +112,7 @@ class CorpVisitor extends Visitor{
 
     @Override
     void visitBoard(Board board) {
-        totalPrive += board.getPrice() *0.75;
+        totalPrive += board.getPrice() * 0.75;
     }
 
     @Override

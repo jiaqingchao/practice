@@ -11,35 +11,41 @@ public class Decorator {
 
     }
 }
-abstract class GameObject06{
+
+abstract class GameObject06 {
     public abstract void paint();
 }
-class Tank06 extends GameObject06{
+
+class Tank06 extends GameObject06 {
     @Override
     public void paint() {
         System.out.println("paint one tank");
     }
 }
-class Bullet06 extends GameObject06{
+
+class Bullet06 extends GameObject06 {
     @Override
     public void paint() {
         System.out.println("paint one bullet");
     }
 }
-class Explode06 extends GameObject06{
+
+class Explode06 extends GameObject06 {
     @Override
     public void paint() {
         System.out.println("paint one explode");
     }
 }
-abstract class GoDecorator extends GameObject06{
+
+abstract class GoDecorator extends GameObject06 {
     GameObject06 go;
+
     public GoDecorator(GameObject06 go) {
         this.go = go;
     }
 }
 
-class RectDecorator extends GoDecorator{
+class RectDecorator extends GoDecorator {
     public RectDecorator(GameObject06 go) {
         super(go);
     }
@@ -52,7 +58,7 @@ class RectDecorator extends GoDecorator{
 }
 
 
-class TailDecorator extends GoDecorator{
+class TailDecorator extends GoDecorator {
     public TailDecorator(GameObject06 go) {
         super(go);
     }

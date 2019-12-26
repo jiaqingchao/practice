@@ -7,10 +7,10 @@ class LinkedList_ implements Collection_ {
     private int size = 0;
 
     @Override
-    public void add(Object o){
+    public void add(Object o) {
         Node n = new Node(o);
         n.next = null;
-        if(head == null){
+        if (head == null) {
             head = n;
             tail = n;
         }
@@ -20,11 +20,11 @@ class LinkedList_ implements Collection_ {
     }
 
     @Override
-    public int size(){
+    public int size() {
         return size;
     }
 
-    private class  Node {
+    private class Node {
         Object o;
         Node next = null;
 

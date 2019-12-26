@@ -6,7 +6,7 @@ public class T01_WattisThread {
     public static void main(String[] args) {
         //new T1().run();
         new T1().start();
-        for(int i = 0;i<10;i++){
+        for (int i = 0; i < 10; i++) {
             try {
                 TimeUnit.MICROSECONDS.sleep(1);
             } catch (InterruptedException e) {
@@ -16,10 +16,10 @@ public class T01_WattisThread {
         }
     }
 
-    private static class T1 extends Thread{
+    private static class T1 extends Thread {
         @Override
-        public void run(){
-            for(int i = 0;i<10;i++){
+        public void run() {
+            for (int i = 0; i < 10; i++) {
                 try {
                     TimeUnit.MICROSECONDS.sleep(1);
                 } catch (InterruptedException e) {

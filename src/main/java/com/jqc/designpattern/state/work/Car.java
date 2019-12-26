@@ -2,12 +2,22 @@ package com.jqc.designpattern.state.work;
 
 public class Car {
     CarState_ state;
-    void open(){
+
+    void open() {
         state.open();
     }
-    void colse(){state.close();}
-    void run(){state.run();}
-    void stop(){state.stop();}
+
+    void colse() {
+        state.close();
+    }
+
+    void run() {
+        state.run();
+    }
+
+    void stop() {
+        state.stop();
+    }
 
 
     public static void main(String[] args) {

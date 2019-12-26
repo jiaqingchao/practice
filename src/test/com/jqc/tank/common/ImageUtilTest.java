@@ -14,7 +14,7 @@ public class ImageUtilTest {
 
     @Test
     public void rotateImage() {
-        try{
+        try {
             BufferedImage tankL = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankL.gif"));
             tankL = rotateImage(tankL, 90);
             Assertions.assertNotNull(tankL);

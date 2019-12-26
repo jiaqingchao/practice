@@ -13,7 +13,7 @@ import io.netty.util.ReferenceCountUtil;
 public class Client {
     public static void main(String[] args) {
         new Client().clientStart();
-        }
+    }
 
     private void clientStart() {
         //线程池
@@ -28,11 +28,11 @@ public class Client {
                             System.out.println("channel initialized!");
                             socketChannel.pipeline().addLast(new ClientHandler());
                         }
-                    }).connect("127.0.0.1",8888)
+                    }).connect("127.0.0.1", 8888)
                     .addListener((ChannelFuture channelFuture) -> {
-                        if(!channelFuture.isSuccess()){
+                        if (!channelFuture.isSuccess()) {
                             System.out.println("not connected");
-                        }else {
+                        } else {
                             System.out.println("connected");
                         }
                     }).sync();
@@ -42,31 +42,32 @@ public class Client {
             f.channel().closeFuture().sync(); //close() -> ChannelFuture,  //ChannelFuture调用close()时执行
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             workers.shutdownGracefully();
         }
 
 
     }
 }
-class ClientHandler extends ChannelInboundHandlerAdapter{
+
+class ClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         //channle 第一次连上可用，写一个字符串
         System.out.println("channel is activated.");
         ByteBuf byteBuf = Unpooled.copiedBuffer("HelloNetty".getBytes());
         final ChannelFuture f = ctx.writeAndFlush(byteBuf);
-        f.addListener((ChannelFuture channelFuture)-> {
+        f.addListener((ChannelFuture channelFuture) -> {
             System.out.println("msg send!");
         });
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        try{
-            ByteBuf buf = (ByteBuf)msg;
+        try {
+            ByteBuf buf = (ByteBuf) msg;
             System.out.println(buf.toString(CharsetUtil.UTF_8));
-        }finally {
+        } finally {
             ReferenceCountUtil.release(msg);
         }
     }

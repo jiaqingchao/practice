@@ -12,13 +12,15 @@ import java.lang.reflect.Proxy;
 
 public class Proxy_ {
 
-    public void before(){
-        System.out.println("method start.."+System.currentTimeMillis());
+    public void before() {
+        System.out.println("method start.." + System.currentTimeMillis());
     }
-    public void after(){
-        System.out.println("method stop.."+System.currentTimeMillis());
+
+    public void after() {
+        System.out.println("method stop.." + System.currentTimeMillis());
     }
-    public void start(){
+
+    public void start() {
         System.out.println("proxy_ start");
     }
 
@@ -26,9 +28,9 @@ public class Proxy_ {
         aopProxy();
     }
 
-    private static void aopProxy(){
+    private static void aopProxy() {
         ApplicationContext context = new ClassPathXmlApplicationContext("aop_app.xml");
-        Proxy_ p = (Proxy_)context.getBean("proxy");
+        Proxy_ p = (Proxy_) context.getBean("proxy");
         p.start();
     }
 
@@ -44,7 +46,7 @@ public class Proxy_ {
                 return o;
             }
         });
-        Tank tank = (Tank)enhancer.create();
+        Tank tank = (Tank) enhancer.create();
         tank.move();
     }
 
@@ -57,12 +59,13 @@ public class Proxy_ {
         m.move();
     }
 
-    static void staticProxy(){
+    static void staticProxy() {
         new LogMoveProxy(new TimeMoveProxy(new Tank())).move();
         new LogMoveProxy(new TimeMoveProxy(new Bullet2())).move();
     }
 }
-class TimeMoveProxy implements Movable{
+
+class TimeMoveProxy implements Movable {
     Movable m;
 
     public TimeMoveProxy(Movable m) {
@@ -81,10 +84,11 @@ class TimeMoveProxy implements Movable{
     }
 
     private void after() {
-        System.out.println("endTime : " +System.currentTimeMillis());
+        System.out.println("endTime : " + System.currentTimeMillis());
     }
 }
-class LogMoveProxy implements Movable{
+
+class LogMoveProxy implements Movable {
     Movable m;
 
     public LogMoveProxy(Movable m) {
@@ -106,16 +110,19 @@ class LogMoveProxy implements Movable{
         System.out.println("move after");
     }
 }
-interface Movable{
+
+interface Movable {
     void move();
 }
-class Tank implements Movable{
-    public void move(){
+
+class Tank implements Movable {
+    public void move() {
         System.out.println("tank move");
     }
 }
-class Bullet2 implements Movable{
-    public void move(){
+
+class Bullet2 implements Movable {
+    public void move() {
         System.out.println("bullet move");
     }
 }
@@ -130,7 +137,7 @@ class TimeProxy implements InvocationHandler {
     @Override
     public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
         before();
-        method.invoke(tank,objects);
+        method.invoke(tank, objects);
         after();
         return o;
     }
@@ -138,6 +145,7 @@ class TimeProxy implements InvocationHandler {
     private void before() {
         System.out.println("before");
     }
+
     private void after() {
         System.out.println("after");
     }

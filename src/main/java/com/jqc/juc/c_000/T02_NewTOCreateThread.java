@@ -1,13 +1,14 @@
 package com.jqc.juc.c_000;
 
 public class T02_NewTOCreateThread {
-    static class MyThread extends Thread{
+    static class MyThread extends Thread {
         @Override
         public void run() {
             System.out.println("Hello MyThread");
         }
     }
-    static class MyRun implements Runnable{
+
+    static class MyRun implements Runnable {
         @Override
         public void run() {
             System.out.println("Hello MyRun");
@@ -17,6 +18,6 @@ public class T02_NewTOCreateThread {
     public static void main(String[] args) {
         new MyThread().start();
         new Thread(new MyRun()).start();
-        new Thread(()->System.out.println("Hello Lambda")).start();
+        new Thread(() -> System.out.println("Hello Lambda")).start();
     }
 }

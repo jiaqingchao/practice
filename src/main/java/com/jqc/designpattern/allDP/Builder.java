@@ -2,7 +2,7 @@ package com.jqc.designpattern.allDP;
 
 public class Builder {
     public static void main(String[] args) {
-        Person p = new Person.PersonBuilder().basicInfo(1,"jqc", 24)
+        Person p = new Person.PersonBuilder().basicInfo(1, "jqc", 24)
                 .weight(160)
                 .score(100)
                 .location("sz", "106")
@@ -10,41 +10,50 @@ public class Builder {
         System.out.println(p);
     }
 }
-class Person{
+
+class Person {
     int id;
     String name;
     int age;
     double weight;
     int score;
     Location loc;
-    private Person(){}
-    static class PersonBuilder{
+
+    private Person() {
+    }
+
+    static class PersonBuilder {
         Person p = new Person();
-        public PersonBuilder basicInfo(int id, String name, int age){
+
+        public PersonBuilder basicInfo(int id, String name, int age) {
             p.id = id;
             p.name = name;
             p.age = age;
             return this;
         }
-        public PersonBuilder weight(double weight){
+
+        public PersonBuilder weight(double weight) {
             p.weight = weight;
             return this;
         }
-        public PersonBuilder score(int score){
+
+        public PersonBuilder score(int score) {
             p.score = score;
             return this;
         }
 
-        public PersonBuilder location(String name,String roomNO){
-            p.loc = new Location(name,roomNO);
+        public PersonBuilder location(String name, String roomNO) {
+            p.loc = new Location(name, roomNO);
             return this;
         }
-        public Person builer(){
+
+        public Person builer() {
             return p;
         }
 
     }
-    static class Location{
+
+    static class Location {
         String name;
         String roomNo;
 

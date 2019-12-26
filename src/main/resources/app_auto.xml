@@ -6,17 +6,17 @@
 
     <aop:aspectj-autoproxy/>
 
-    <bean id ="tank" class="com.jqc.designpattern.spring.v2.Tank"/>
-    <bean id ="timeProxy" class="com.jqc.designpattern.spring.v2.TimeProxy"/>
+    <bean id="tank" class="com.jqc.designpattern.spring.v2.Tank"/>
+    <bean id="timeProxy" class="com.jqc.designpattern.spring.v2.TimeProxy"/>
 
-<!--    <aop:config>-->
-<!--        <aop:aspect id="time" ref="timeProxy">-->
-<!--            <aop:pointcut id="onmove" expression="execution(void com.jqc.designpattern.spring.v1.Tank.move())"/>-->
-<!--            <aop:before method="before" pointcut-ref="onmove"/>-->
-<!--            <aop:after method="after" pointcut-ref="onmove"/>-->
+    <!--    <aop:config>-->
+    <!--        <aop:aspect id="time" ref="timeProxy">-->
+    <!--            <aop:pointcut id="onmove" expression="execution(void com.jqc.designpattern.spring.v1.Tank.move())"/>-->
+    <!--            <aop:before method="before" pointcut-ref="onmove"/>-->
+    <!--            <aop:after method="after" pointcut-ref="onmove"/>-->
 
-<!--        </aop:aspect>-->
+    <!--        </aop:aspect>-->
 
-<!--    </aop:config>-->
+    <!--    </aop:config>-->
 
 </beans>

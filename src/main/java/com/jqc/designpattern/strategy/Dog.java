@@ -8,12 +8,12 @@ public class Dog implements java.lang.Comparable<Dog> {
     }
 
     @Override
-    public int compareTo(Dog d){
-        if(this.food < d.food){
+    public int compareTo(Dog d) {
+        if (this.food < d.food) {
             return -1;
-        }else if(this.food > d.food){
+        } else if (this.food > d.food) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }

@@ -11,7 +11,8 @@ public class TestFrame extends Frame {
     public static void main(String[] args) {
         new TestFrame().launch();
     }
-    public void launch(){
+
+    public void launch() {
         Button b = new Button("press me");
         b.addActionListener(new MyActionListener());
         b.addActionListener(new MyActionListener2());
@@ -25,16 +26,18 @@ public class TestFrame extends Frame {
                 System.exit(0);
             }
         });
-        this.setLocation(400,400);
+        this.setLocation(400, 400);
         this.setVisible(true);
     }
 }
+
 class MyActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("button pressed!");
     }
 }
+
 class MyActionListener2 implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {

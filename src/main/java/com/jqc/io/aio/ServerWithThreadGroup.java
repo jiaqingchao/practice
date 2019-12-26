@@ -14,7 +14,7 @@ public class ServerWithThreadGroup {
     public static void main(String[] args) {
         try {
             ExecutorService executorService = Executors.newCachedThreadPool();
-            AsynchronousChannelGroup threadGroup = AsynchronousChannelGroup.withCachedThreadPool(executorService,1);
+            AsynchronousChannelGroup threadGroup = AsynchronousChannelGroup.withCachedThreadPool(executorService, 1);
 
             final AsynchronousServerSocketChannel serverChannel = AsynchronousServerSocketChannel.open(threadGroup)
                     .bind(new InetSocketAddress(8888));
@@ -30,7 +30,7 @@ public class ServerWithThreadGroup {
                             @Override
                             public void completed(Integer result, ByteBuffer attachment) {
                                 attachment.flip();
-                                System.out.println(new String(attachment.array(),0,result));
+                                System.out.println(new String(attachment.array(), 0, result));
                                 client.write(ByteBuffer.wrap("HelloClient".getBytes()));
                             }
 
@@ -49,10 +49,10 @@ public class ServerWithThreadGroup {
                     exc.printStackTrace();
                 }
             });
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        while (true){
+        while (true) {
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {

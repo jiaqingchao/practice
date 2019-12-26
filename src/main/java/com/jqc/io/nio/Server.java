@@ -24,11 +24,11 @@ public class Server {
             Selector selector = Selector.open();
             ssc.register(selector, SelectionKey.OP_ACCEPT);
 
-            while (true){
+            while (true) {
                 selector.select();
                 Set<SelectionKey> keys = selector.selectedKeys();
                 Iterator<SelectionKey> it = keys.iterator();
-                while (it.hasNext()){
+                while (it.hasNext()) {
                     SelectionKey key = it.next();
                     it.remove();
                     handle(key);
@@ -41,7 +41,7 @@ public class Server {
     }
 
     private static void handle(SelectionKey key) {
-        if(key.isAcceptable()) {
+        if (key.isAcceptable()) {
             ServerSocketChannel ssc = (ServerSocketChannel) key.channel();
             SocketChannel sc = null;
             try {
@@ -52,10 +52,10 @@ public class Server {
                 e.printStackTrace();
             } finally {
                 try {
-                    if(sc!=null){
+                    if (sc != null) {
                         sc.close();
                     }
-                    if(ssc!=null){
+                    if (ssc != null) {
                         ssc.close();
                     }
                 } catch (IOException e) {
@@ -63,14 +63,14 @@ public class Server {
                 }
 
             }
-        }else if(key.isReadable()){
+        } else if (key.isReadable()) {
             SocketChannel sc = null;
             try {
-                sc = (SocketChannel)key.channel();
+                sc = (SocketChannel) key.channel();
                 ByteBuffer buffer = ByteBuffer.allocate(512);
                 buffer.clear();
                 int len = sc.read(buffer);
-                if(len != -1){
+                if (len != -1) {
                     System.out.println(new String(buffer.array(), 0, len));
                 }
                 ByteBuffer bufferTorWrite = ByteBuffer.wrap("HelloClient".getBytes());

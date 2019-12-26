@@ -7,10 +7,10 @@ class LinkedList_<E> implements Collection_<E> {
     private int size = 0;
 
     @Override
-    public void add(E e){
+    public void add(E e) {
         Node n = new Node(e);
         n.next = null;
-        if(head == null){
+        if (head == null) {
             head = n;
             tail = n;
         }
@@ -20,11 +20,11 @@ class LinkedList_<E> implements Collection_<E> {
     }
 
     @Override
-    public int size(){
+    public int size() {
         return size;
     }
 
-    private class  Node {
+    private class Node {
         E e;
         Node next = null;
 
@@ -33,7 +33,7 @@ class LinkedList_<E> implements Collection_<E> {
         }
     }
 
-    public Iterator_<E> iterator(){
+    public Iterator_<E> iterator() {
         return new LinkedListIterator();
     }
 
@@ -42,7 +42,7 @@ class LinkedList_<E> implements Collection_<E> {
 
         @Override
         public boolean hasNext() {
-            if(currentNode == null){
+            if (currentNode == null) {
                 return false;
             }
             return true;

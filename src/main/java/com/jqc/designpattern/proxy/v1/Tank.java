@@ -3,9 +3,9 @@ package com.jqc.designpattern.proxy.v1;
 import java.util.Random;
 
 /**
- *问题：我想记录坦克的移动时间
+ * 问题：我想记录坦克的移动时间
  */
-public class Tank implements Movable{
+public class Tank implements Movable {
     /**
      * 模拟坦克移动了一段时间
      */
@@ -19,6 +19,7 @@ public class Tank implements Movable{
         }
     }
 }
-interface Movable{
+
+interface Movable {
     void move();
 }

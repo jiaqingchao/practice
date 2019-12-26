@@ -10,14 +10,14 @@ package com.jqc.designpattern.singleton;
 public enum Mgr08 {
     INSTSNCE;
 
-    public void m(){
+    public void m() {
         System.out.println("m");
     }
 
 
     public static void main(String[] args) {
-        for(int i = 0; i < 100; i++){
-            new Thread(()->{
+        for (int i = 0; i < 100; i++) {
+            new Thread(() -> {
                 System.out.println(Mgr08.INSTSNCE.hashCode());
             }).start();
         }

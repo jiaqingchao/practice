@@ -8,11 +8,12 @@ import java.awt.event.WindowEvent;
 public class ClientFram extends Frame {
     TextArea ta = new TextArea();
     TextField tf = new TextField();
-    public ClientFram(){
-        this.setSize(600,400);
-        this.setLocation(100,20);
+
+    public ClientFram() {
+        this.setSize(600, 400);
+        this.setLocation(100, 20);
         this.add(ta, BorderLayout.CENTER);
-        this.add(tf,BorderLayout.SOUTH);
+        this.add(tf, BorderLayout.SOUTH);
         tf.addActionListener((ActionEvent e) -> {
             ta.setText(ta.getText() + tf.getText());
             tf.setText("");

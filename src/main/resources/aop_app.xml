@@ -5,18 +5,16 @@
      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <aop:aspectj-autoproxy/>
-    <bean id ="proxy" class="com.jqc.designpattern.allDP.Proxy_"/>
-    <bean id ="timeProxy" class="com.jqc.designpattern.spring.v1.TimeProxy"/>
+    <bean id="proxy" class="com.jqc.designpattern.allDP.Proxy_"/>
+    <bean id="timeProxy" class="com.jqc.designpattern.spring.v1.TimeProxy"/>
 
-<!--    <aop:config>-->
-<!--        <aop:aspect id="time" ref="timeProxy">-->
-<!--            <aop:pointcut id="onstart" expression="execution(void com.jqc.designpattern.allDP.Proxy_.start())"/>-->
-<!--            <aop:after method="after" pointcut-ref="onstart"></aop:after>-->
-<!--            <aop:before method="before" pointcut-ref="onstart"></aop:before>-->
-<!--        </aop:aspect>-->
-<!--    </aop:config>-->
-
-
+    <!--    <aop:config>-->
+    <!--        <aop:aspect id="time" ref="timeProxy">-->
+    <!--            <aop:pointcut id="onstart" expression="execution(void com.jqc.designpattern.allDP.Proxy_.start())"/>-->
+    <!--            <aop:after method="after" pointcut-ref="onstart"></aop:after>-->
+    <!--            <aop:before method="before" pointcut-ref="onstart"></aop:before>-->
+    <!--        </aop:aspect>-->
+    <!--    </aop:config>-->
 
 
 </beans>

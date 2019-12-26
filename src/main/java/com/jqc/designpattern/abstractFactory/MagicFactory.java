@@ -1,6 +1,6 @@
 package com.jqc.designpattern.abstractFactory;
 
-public class MagicFactory extends AbstractFactory{
+public class MagicFactory extends AbstractFactory {
     @Override
     Food createFood() {
         return new MushRoom();

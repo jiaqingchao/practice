@@ -17,7 +17,7 @@ public class SnakePart {
 
     private SnakeFrame sf;
 
-    public SnakePart(int x, int y, Dir dir, SnakeFrame sf){
+    public SnakePart(int x, int y, Dir dir, SnakeFrame sf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -25,7 +25,7 @@ public class SnakePart {
     }
 
     public Rectangle getRectangle() {
-        if(rectangle == null) return new Rectangle();
+        if (rectangle == null) return new Rectangle();
         return rectangle;
     }
 
@@ -68,6 +68,7 @@ public class SnakePart {
     public void setLiving(boolean living) {
         this.living = living;
     }
+
     public boolean isFood() {
         return isFood;
     }
@@ -76,7 +77,7 @@ public class SnakePart {
         isFood = food;
     }
 
-    public void paint(Graphics g){
+    public void paint(Graphics g) {
         Color c = g.getColor();
         g.setColor(Color.white);
         g.fillRect(x, y, SnakeFrame.SNAKE_WIDTH, SnakeFrame.SNAKE_WIDTH);
@@ -85,7 +86,7 @@ public class SnakePart {
 
     public void move() {
 
-        switch (this.dir){
+        switch (this.dir) {
             case DOWN:
                 this.y += this.speed;
                 break;
@@ -102,23 +103,23 @@ public class SnakePart {
                 break;
         }
 
-        if(this.x < 0 || this.x + SnakeFrame.SNAKE_WIDTH > SnakeFrame.WINDOW_WIDTH
-            ||this.y < 0 || this.y + SnakeFrame.SNAKE_WIDTH > SnakeFrame.WINDOW_HEIGHT){
+        if (this.x < 0 || this.x + SnakeFrame.SNAKE_WIDTH > SnakeFrame.WINDOW_WIDTH
+                || this.y < 0 || this.y + SnakeFrame.SNAKE_WIDTH > SnakeFrame.WINDOW_HEIGHT) {
             this.setLiving(false);
         }
     }
 
-    public void collisionWidth(SnakePart snakePart){
+    public void collisionWidth(SnakePart snakePart) {
         Rectangle snakePartRectangle = snakePart.getRectangle();
         Rectangle snakeHeadRectangle = this.getRectangle();
 
         snakePartRectangle.setRect(snakePart.getX(), snakePart.getY(), SnakeFrame.SNAKE_WIDTH, SnakeFrame.SNAKE_WIDTH);
         snakeHeadRectangle.setRect(this.getX(), this.getY(), SnakeFrame.SNAKE_WIDTH, SnakeFrame.SNAKE_WIDTH);
 
-        if(snakeHeadRectangle.intersects(snakePartRectangle)){
-            if(snakePart.isFood()){
+        if (snakeHeadRectangle.intersects(snakePartRectangle)) {
+            if (snakePart.isFood()) {
                 SnakePart snakeTail = sf.snakeParts.get(sf.snakeParts.size() - 1);
-                sf.snakeParts.add(new SnakePart(snakeTail.x,snakeTail.y,snakeTail.dir,snakeTail.sf));
+                sf.snakeParts.add(new SnakePart(snakeTail.x, snakeTail.y, snakeTail.dir, snakeTail.sf));
                 snakePart.randomFood();
                 return;
             }

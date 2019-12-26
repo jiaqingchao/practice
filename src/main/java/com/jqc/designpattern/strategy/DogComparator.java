@@ -1,13 +1,13 @@
 package com.jqc.designpattern.strategy;
 
-public class DogComparator implements Comparator<Dog>{
+public class DogComparator implements Comparator<Dog> {
     @Override
     public int compare(Dog o1, Dog o2) {
-        if(o1.food < o2.food){
+        if (o1.food < o2.food) {
             return -1;
-        }else if(o1.food > o2.food){
+        } else if (o1.food > o2.food) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }

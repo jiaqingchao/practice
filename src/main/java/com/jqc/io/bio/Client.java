@@ -13,11 +13,11 @@ public class Client {
             //s.getOutputStream().close();
             System.out.println("write over,waiting for msg back...");
             byte[] bytes = new byte[1024];
-            int len  = s.getInputStream().read(bytes);//read 阻塞
-            System.out.println(new String(bytes,0 ,len));
+            int len = s.getInputStream().read(bytes);//read 阻塞
+            System.out.println(new String(bytes, 0, len));
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 s.close();
             } catch (IOException e) {

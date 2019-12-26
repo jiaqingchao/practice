@@ -28,7 +28,7 @@ public class Tank {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
-        if(this.group == Group.AI){
+        if (this.group == Group.AI) {
             this.moving = true;
         }
 
@@ -62,15 +62,15 @@ public class Tank {
         return group;
     }
 
-    public Rectangle getRectangle(){
+    public Rectangle getRectangle() {
         return rectangle;
     }
 
     public void die() {
         this.living = false;
 
-        int eX = this.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
-        int eY = this.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;
+        int eX = this.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
+        int eY = this.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
 
         tf.explodes.add(new Explode(eX, eY));
     }
@@ -85,18 +85,18 @@ public class Tank {
     }
 
     private void paintTank(Graphics g) {
-        switch (this.dir){
-            case LEFT :
-                g.drawImage(this.group == Group.RED ? ResourceMgr.redTankL : ResourceMgr.aiTankL, this.x, this.y,null);
+        switch (this.dir) {
+            case LEFT:
+                g.drawImage(this.group == Group.RED ? ResourceMgr.redTankL : ResourceMgr.aiTankL, this.x, this.y, null);
                 break;
-            case UP :
-                g.drawImage(this.group == Group.RED ? ResourceMgr.redTankU : ResourceMgr.aiTankU, this.x, this.y,null);
+            case UP:
+                g.drawImage(this.group == Group.RED ? ResourceMgr.redTankU : ResourceMgr.aiTankU, this.x, this.y, null);
                 break;
             case RIGHT:
-                g.drawImage(this.group == Group.RED ? ResourceMgr.redTankR : ResourceMgr.aiTankR, this.x, this.y,null);
+                g.drawImage(this.group == Group.RED ? ResourceMgr.redTankR : ResourceMgr.aiTankR, this.x, this.y, null);
                 break;
             case DOWN:
-                g.drawImage(this.group == Group.RED ? ResourceMgr.redTankD : ResourceMgr.aiTankD, this.x, this.y,null);
+                g.drawImage(this.group == Group.RED ? ResourceMgr.redTankD : ResourceMgr.aiTankD, this.x, this.y, null);
                 break;
             default:
                 break;
@@ -104,38 +104,39 @@ public class Tank {
     }
 
     private void randomFireAndDir() {
-        if(this.group != Group.AI){
+        if (this.group != Group.AI) {
             return;
         }
         // AI 随机发射子弹
-        if(random.nextInt(100) > 95){
+        if (random.nextInt(100) > 95) {
             this.fire();
         }
 
         //AI 随机改变方向
-        if(random.nextInt(100) > 95)
+        if (random.nextInt(100) > 95)
             randomDir();
     }
-    public void fire(){
+
+    public void fire() {
         int bX = 0;
         int bY = 0;
 
-        switch (this.dir){
+        switch (this.dir) {
             case DOWN:
                 bY = this.y + Tank.HEIGHT;
-                bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
+                bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
                 break;
             case UP:
                 bY = this.y - Bullet.HEIGHT;
-                bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
+                bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
                 break;
             case LEFT:
-                bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
+                bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
                 bX = this.x - Bullet.WIDTH;
                 break;
             case RIGHT:
                 bX = this.x + Tank.WIDTH;
-                bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
+                bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
                 break;
             default:
                 break;
@@ -143,18 +144,18 @@ public class Tank {
 
         tf.bullets.add(new Bullet(bX, bY, this.dir, this.group));
 
-        if(this.group == Group.RED){
-            new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
+        if (this.group == Group.RED) {
+            new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
         }
     }
 
     private void randomDir() {
         int randomNum = random.nextInt(4);
-        switch (randomNum){
-            case 0 :
+        switch (randomNum) {
+            case 0:
                 dir = Dir.UP;
                 break;
-            case 1 :
+            case 1:
                 dir = Dir.DOWN;
                 break;
             case 2:
@@ -169,7 +170,7 @@ public class Tank {
     }
 
     private void move() {
-        if(!this.moving) return;
+        if (!this.moving) return;
 
         setXYForDirSpeed();
 
@@ -178,17 +179,17 @@ public class Tank {
         rectangle.x = this.x;
         rectangle.y = this.y;
 
-        if(this.group == Group.RED) {
+        if (this.group == Group.RED) {
             new Thread(() -> new Audio("audio/tank_move.wav").play()).start();
         }
     }
 
     private void setXYForDirSpeed() {
-        switch (this.dir){
-            case LEFT :
+        switch (this.dir) {
+            case LEFT:
                 this.x -= this.speed;
                 break;
-            case UP :
+            case UP:
                 this.y -= this.speed;
                 break;
             case RIGHT:
@@ -204,10 +205,10 @@ public class Tank {
 
     private void boudsCheck() {//边界检测
 
-        if(this.x < 2) this.x = 2;
-        if(this.y < 28) this.y = 28;
-        if(this.x > TankFrame.WIDTH - Tank.WIDTH - 2) this.x = TankFrame.WIDTH - Tank.WIDTH - 2;
-        if(this.y > TankFrame.HEIGHT - Tank.HEIGHT - 2) this.y = TankFrame.HEIGHT - Tank.HEIGHT - 2;
+        if (this.x < 2) this.x = 2;
+        if (this.y < 28) this.y = 28;
+        if (this.x > TankFrame.WIDTH - Tank.WIDTH - 2) this.x = TankFrame.WIDTH - Tank.WIDTH - 2;
+        if (this.y > TankFrame.HEIGHT - Tank.HEIGHT - 2) this.y = TankFrame.HEIGHT - Tank.HEIGHT - 2;
     }
 
 }

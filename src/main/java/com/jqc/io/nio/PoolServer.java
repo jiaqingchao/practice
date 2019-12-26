@@ -38,7 +38,7 @@ public class PoolServer {
             System.out.println("服务端启动成功！");
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 serverChannel.close();
             } catch (IOException e) {
@@ -48,20 +48,20 @@ public class PoolServer {
     }
 
     private void listen() {
-        while(true){
+        while (true) {
             try {
                 selector.select();
                 Iterator ite = this.selector.selectedKeys().iterator();
-                while(ite.hasNext()){
+                while (ite.hasNext()) {
                     SelectionKey key = (SelectionKey) ite.next();
                     ite.remove();
-                    if(key.isAcceptable()){
+                    if (key.isAcceptable()) {
                         ServerSocketChannel server = (ServerSocketChannel) key.channel();
                         SocketChannel channel = server.accept();
                         channel.configureBlocking(false);
                         channel.register(this.selector, SelectionKey.OP_READ);
-                    }else if(key.isReadable()){
-                        key.interestOps(key.interestOps()&(-SelectionKey.OP_READ));
+                    } else if (key.isReadable()) {
+                        key.interestOps(key.interestOps() & (-SelectionKey.OP_READ));
                         pool.execute(new ThreadHandlerChannel(key));
                     }
                 }
@@ -73,7 +73,7 @@ public class PoolServer {
     }
 }
 
-class ThreadHandlerChannel extends Thread{
+class ThreadHandlerChannel extends Thread {
     SelectionKey key;
 
     public ThreadHandlerChannel(SelectionKey key) {
@@ -82,15 +82,15 @@ class ThreadHandlerChannel extends Thread{
 
     @Override
     public void run() {
-        SocketChannel channel = (SocketChannel)key.channel();
+        SocketChannel channel = (SocketChannel) key.channel();
         ByteBuffer buffer = ByteBuffer.allocate(1024);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         try {
             int size = 0;
-            while (((size = channel.read(buffer))>0)) {
+            while (((size = channel.read(buffer)) > 0)) {
                 buffer.flip();
-                baos.write(buffer.array(),0,size);
+                baos.write(buffer.array(), 0, size);
                 buffer.clear();
             }
             baos.close();
@@ -100,16 +100,16 @@ class ThreadHandlerChannel extends Thread{
             writeBuf.put(content);
             writeBuf.flip();
             channel.write(writeBuf);
-            if(size == -1){
+            if (size == -1) {
                 channel.close();
-            }else {
-                key.interestOps(key.interestOps()|SelectionKey.OP_READ);
+            } else {
+                key.interestOps(key.interestOps() | SelectionKey.OP_READ);
                 key.selector().wakeup();
             }
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
-        }finally {
+        } finally {
             try {
                 channel.close();
             } catch (IOException e) {

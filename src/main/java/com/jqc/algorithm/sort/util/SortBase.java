@@ -5,18 +5,21 @@ import com.jqc.algorithm.sort.*;
 public abstract class SortBase {
     /**
      * 位运算交换，i=j 时 值会变为0;
+     *
      * @param arr
      * @param i
      * @param j
      */
     protected static void swap(int[] arr, int i, int j) {
-        arr[i] = arr[j]^arr[i];
-        arr[j] = arr[j]^arr[i];
-        arr[i] = arr[j]^arr[i];
+        arr[i] = arr[j] ^ arr[i];
+        arr[j] = arr[j] ^ arr[i];
+        arr[i] = arr[j] ^ arr[i];
 
     }
+
     /**
      * 正常交换
+     *
      * @param arr
      * @param i
      * @param j
@@ -27,6 +30,7 @@ public abstract class SortBase {
         arr[j] = temp;
 
     }
+
     protected static void printArr(int[] arr, String s) {
         System.out.print(s);
         for (int k = 0; k < arr.length; k++) {
@@ -35,95 +39,105 @@ public abstract class SortBase {
         System.out.println();
     }
 
-    public void sort(int[] arr){}
-    public void sort2(int[] arr){}
-    public void sort3(int[] arr){}
-    public void sort4(int[] arr){}
+    public void sort(int[] arr) {
+    }
 
-    protected void check(){
+    public void sort2(int[] arr) {
+    }
+
+    public void sort3(int[] arr) {
+    }
+
+    public void sort4(int[] arr) {
+    }
+
+    protected void check() {
         int wrong = 0;
-        for(int i=0; i<100; i++){
-            int[] arr = DataChecker.generateRandomArray(10000,0,5000);
+        for (int i = 0; i < 100; i++) {
+            int[] arr = DataChecker.generateRandomArray(10000, 0, 5000);
             int[] arr2 = DataChecker.copyArrAndDoSortArr(arr);
             sort(arr2);
-            if(!DataChecker.check(arr, arr2))
+            if (!DataChecker.check(arr, arr2))
                 wrong++;
 
         }
         System.out.println("wrong : " + wrong);
 
     }
-    protected void check2(){
+
+    protected void check2() {
         int wrong = 0;
-        for(int i = 0; i < 100; i++){
-            int[] arr = DataChecker.generateRandomArray(10000,1000,6000);
+        for (int i = 0; i < 100; i++) {
+            int[] arr = DataChecker.generateRandomArray(10000, 1000, 6000);
             int[] arr2 = DataChecker.copyArrAndDoSortArr(arr);
             sort2(arr2);
-            if(!DataChecker.check(arr, arr2))
+            if (!DataChecker.check(arr, arr2))
                 wrong++;
 
         }
         System.out.println("wrong : " + wrong);
     }
-    protected void check3(){
+
+    protected void check3() {
         int wrong = 0;
-        for(int i = 0; i < 100; i++){
-            int[] arr = DataChecker.generateRandomArray(10000,1000,6000);
+        for (int i = 0; i < 100; i++) {
+            int[] arr = DataChecker.generateRandomArray(10000, 1000, 6000);
             int[] arr2 = DataChecker.copyArrAndDoSortArr(arr);
             sort3(arr2);
-            if(!DataChecker.check(arr, arr2))
+            if (!DataChecker.check(arr, arr2))
                 wrong++;
 
         }
         System.out.println("wrong : " + wrong);
     }
-    protected void check4(){
+
+    protected void check4() {
         int wrong = 0;
-        for(int i = 0; i < 100; i++){
-            int[] arr = DataChecker.generateRandomArray(10000,1000,6000);
+        for (int i = 0; i < 100; i++) {
+            int[] arr = DataChecker.generateRandomArray(10000, 1000, 6000);
             int[] arr2 = DataChecker.copyArrAndDoSortArr(arr);
             sort4(arr2);
-            if(!DataChecker.check(arr, arr2))
+            if (!DataChecker.check(arr, arr2))
                 wrong++;
 
         }
         System.out.println("wrong : " + wrong);
     }
 
-    protected void sortTime(int[] checkArr){
+    protected void sortTime(int[] checkArr) {
         int[] arr = new int[checkArr.length];
 
-        System.arraycopy(checkArr,0,arr,0,checkArr.length);
+        System.arraycopy(checkArr, 0, arr, 0, checkArr.length);
         long startTime = System.nanoTime();
         sort(arr);
         long endTime = System.nanoTime();
-        System.out.println("sort time : " + (endTime - startTime)/1000);
+        System.out.println("sort time : " + (endTime - startTime) / 1000);
 
         System.arraycopy(checkArr, 0, arr, 0, checkArr.length);
         startTime = System.nanoTime();
         sort2(arr);
         endTime = System.nanoTime();
-        if(endTime - startTime > 10_0000)
-            System.out.println("sort2 time : " + (endTime - startTime)/1000);
+        if (endTime - startTime > 10_0000)
+            System.out.println("sort2 time : " + (endTime - startTime) / 1000);
 
         System.arraycopy(checkArr, 0, arr, 0, checkArr.length);
         startTime = System.nanoTime();
         sort3(arr);
         endTime = System.nanoTime();
-        if(endTime - startTime > 10_0000)
-            System.out.println("sort3 time : " + (endTime - startTime)/1000);
+        if (endTime - startTime > 10_0000)
+            System.out.println("sort3 time : " + (endTime - startTime) / 1000);
 
         System.arraycopy(checkArr, 0, arr, 0, checkArr.length);
         startTime = System.nanoTime();
         sort4(arr);
         endTime = System.nanoTime();
-        if(endTime - startTime > 10_0000)
-            System.out.println("sort4 time : " + (endTime - startTime)/1000);
+        if (endTime - startTime > 10_0000)
+            System.out.println("sort4 time : " + (endTime - startTime) / 1000);
     }
 
     public static void main(String[] args) {
 
-        int[] arr = DataChecker.generateRandomArray(150, 5 ,110);
+        int[] arr = DataChecker.generateRandomArray(150, 5, 110);
 //        int[] arr = new int[]{2,0,5,6,8,1,8,3,5,0};
 //        int[] arr = new int[]{7,7,8};
         SortBase sort;
@@ -144,12 +158,13 @@ public abstract class SortBase {
 //        sort.check2();
 //        sort.check3();
 //        sort.check4();
-      //  showTime();
+        //  showTime();
 //printArr(arr,"");
     }
-    static void showTime(){
 
-        int[] timeArr = DataChecker.generateRandomArray(10000, 1000,6000);
+    static void showTime() {
+
+        int[] timeArr = DataChecker.generateRandomArray(10000, 1000, 6000);
 
         SortBase sort;
 

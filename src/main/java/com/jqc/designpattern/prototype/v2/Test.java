@@ -6,7 +6,7 @@ package com.jqc.designpattern.prototype.v2;
 public class Test {
     public static void main(String[] args) throws CloneNotSupportedException {
         Person p1 = new Person();
-        Person p2 = (Person)p1.clone();
+        Person p2 = (Person) p1.clone();
         System.out.println(p2.age + " " + p2.score);
         System.out.println(p2.loc);
 
@@ -16,11 +16,11 @@ public class Test {
     }
 }
 
-class Person implements Cloneable{
+class Person implements Cloneable {
     int age = 0;
     int score = 100;
 
-    Location loc = new Location("sz",106);
+    Location loc = new Location("sz", 106);
 
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -30,7 +30,7 @@ class Person implements Cloneable{
     }
 }
 
-class Location implements Cloneable{
+class Location implements Cloneable {
     String street;
     int roomNo;
 

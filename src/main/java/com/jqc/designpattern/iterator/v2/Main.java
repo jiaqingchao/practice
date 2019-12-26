@@ -4,8 +4,8 @@ public class Main {
 
     public static void main(String[] args) {
         LinkedList_ list = new LinkedList_();
-        for(int i = 0; i < 15; i++){
-            list.add(new String("s"+i));
+        for (int i = 0; i < 15; i++) {
+            list.add(new String("s" + i));
         }
         System.out.println(list.size());
     }
@@ -18,10 +18,10 @@ class LinkedList_ {
     //容器中有多少元素
     private int size = 0;
 
-    public void add(Object o){
+    public void add(Object o) {
         Node n = new Node(o);
         n.next = null;
-        if(head == null){
+        if (head == null) {
             head = n;
             tail = n;
         }
@@ -30,7 +30,7 @@ class LinkedList_ {
         size++;
     }
 
-    private class  Node {
+    private class Node {
         Object o;
         Node next = null;
 
@@ -39,7 +39,7 @@ class LinkedList_ {
         }
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 

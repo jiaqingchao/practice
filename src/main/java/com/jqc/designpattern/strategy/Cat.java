@@ -1,7 +1,7 @@
 package com.jqc.designpattern.strategy;
 
-public class Cat implements java.lang.Comparable<Cat>, Comparator<Cat>{
-    int weight,height;
+public class Cat implements java.lang.Comparable<Cat>, Comparator<Cat> {
+    int weight, height;
 
     public Cat(int weight, int height) {
         this.weight = weight;
@@ -9,12 +9,12 @@ public class Cat implements java.lang.Comparable<Cat>, Comparator<Cat>{
     }
 
     @Override
-    public int compareTo(Cat c){
-        if(this.weight < c.weight){
+    public int compareTo(Cat c) {
+        if (this.weight < c.weight) {
             return -1;
-        }else if(this.weight > c.weight){
+        } else if (this.weight > c.weight) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }

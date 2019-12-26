@@ -16,11 +16,12 @@ public class Main {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(Tank.class);
         enhancer.setCallback(new TimeMethodInterceptor());
-        Tank tank = (Tank)enhancer.create();
+        Tank tank = (Tank) enhancer.create();
         tank.move();
     }
 }
-class TimeMethodInterceptor implements MethodInterceptor{
+
+class TimeMethodInterceptor implements MethodInterceptor {
     @Override
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
         System.out.println("before");
@@ -30,6 +31,7 @@ class TimeMethodInterceptor implements MethodInterceptor{
         return result;
     }
 }
+
 class Tank {
     public void move() {
         System.out.println("Tank moving claclacla...");

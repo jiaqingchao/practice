@@ -12,34 +12,36 @@ import java.util.List;
 class Child {
     private boolean cry = false;
     private List<Observer> observers = new ArrayList<>();
+
     {
         observers.add(new Dad());
         observers.add(new Mum());
         observers.add(new Dog());
-        observers.add((e)->{
+        observers.add((e) -> {
             System.out.println("ppp");
         });
         //hook callback function
     }
+
     public boolean isCry() {
         return cry;
     }
 
-    wakeUpEvent event = new wakeUpEvent(System.currentTimeMillis(),"bed", this);
+    wakeUpEvent event = new wakeUpEvent(System.currentTimeMillis(), "bed", this);
 
-    public void wakeUp(){
+    public void wakeUp() {
         cry = true;
-        for (Observer observer: observers) {
+        for (Observer observer : observers) {
             observer.actionOnWakeup(event);
         }
     }
 }
 
-abstract class Event<T>{
+abstract class Event<T> {
     abstract T getSource();
 }
 
-class wakeUpEvent extends Event<Child>{
+class wakeUpEvent extends Event<Child> {
     long timestamp;
     String loc;
     Child source;
@@ -56,12 +58,12 @@ class wakeUpEvent extends Event<Child>{
     }
 }
 
-interface Observer{
+interface Observer {
     void actionOnWakeup(wakeUpEvent event);
 }
 
 class Dad implements Observer {
-    public void feed(){
+    public void feed() {
         System.out.println("Dad feeding...");
     }
 
@@ -72,9 +74,10 @@ class Dad implements Observer {
 }
 
 class Mum implements Observer {
-    public void hug(){
+    public void hug() {
         System.out.println("Mum hugging...");
     }
+
     @Override
     public void actionOnWakeup(wakeUpEvent event) {
         hug();
@@ -82,9 +85,10 @@ class Mum implements Observer {
 }
 
 class Dog implements Observer {
-    public void wang(){
+    public void wang() {
         System.out.println("Dog wang...");
     }
+
     @Override
     public void actionOnWakeup(wakeUpEvent event) {
         wang();

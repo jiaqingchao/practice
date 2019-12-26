@@ -3,7 +3,7 @@ package com.jqc.designpattern.proxy.v6;
 import java.util.Random;
 
 /**
- *问题：我想记录坦克的移动时间
+ * 问题：我想记录坦克的移动时间
  * 最简单的办法，修改代码，记录时间
  * 问题2:如果无法改变方法源码呢？ benchmark--性能测试
  * 用继承？
@@ -35,11 +35,12 @@ public class Tank implements Movable {
 
 class TankTimeProxy implements Movable {
     Movable movable;
+
     @Override
     public void move() {
         long start = System.currentTimeMillis();
         movable.move();
-        long end =  System.currentTimeMillis();
+        long end = System.currentTimeMillis();
         System.out.println(end - start);
     }
 
@@ -50,6 +51,7 @@ class TankTimeProxy implements Movable {
 
 class TankLogProxy implements Movable {
     Movable movable;
+
     @Override
     public void move() {
         System.out.println("start moving...");
@@ -62,6 +64,6 @@ class TankLogProxy implements Movable {
     }
 }
 
-interface Movable{
+interface Movable {
     void move();
 }

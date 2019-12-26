@@ -11,9 +11,10 @@ import java.util.concurrent.TimeUnit;
 
 public class T {
     int count = 0;
-    synchronized void m(){
+
+    synchronized void m() {
         System.out.println(Thread.currentThread().getName() + " start");
-        while (true){
+        while (true) {
             count++;
             System.out.println(Thread.currentThread().getName() + " count = " + count);
             try {
@@ -21,8 +22,8 @@ public class T {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if(count == 5){
-                int i = 1/0;//此处抛出异常，锁将被释放，要想不释放，可以在这里catch,然后让循环继续
+            if (count == 5) {
+                int i = 1 / 0;//此处抛出异常，锁将被释放，要想不释放，可以在这里catch,然后让循环继续
                 System.out.println(i);
             }
         }
@@ -36,7 +37,7 @@ public class T {
                 t.m();
             }
         };
-        new Thread(r,"t1").start();
+        new Thread(r, "t1").start();
 
         try {
             TimeUnit.SECONDS.sleep(3);
@@ -44,6 +45,6 @@ public class T {
             e.printStackTrace();
         }
 
-        new Thread(r,"t2").start();
+        new Thread(r, "t2").start();
     }
 }
