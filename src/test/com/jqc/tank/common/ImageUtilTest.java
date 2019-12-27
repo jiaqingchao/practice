@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 

@@ -326,7 +326,10 @@
           6. 底层是ForkJoinPool提供了一个方便的接口
 
           7. ```java
-             public static ExecutorService newWorkStealingPool() {    		return new ForkJoinPool        				 					(Runtime.getRuntime().availableProcessors(),         			ForkJoinPool.defaultForkJoinWorkerThreadFactory,         	null, true);
+             return new ForkJoinPool (
+                  Runtime.getRuntime().availableProcessors(),
+                  ForkJoinPool.defaultForkJoinWorkerThreadFactory,
+                  null, true);
              }
              ```
 
@@ -349,4 +352,18 @@
         1. ThreadPoolExecutor
         2. ForkJoinPool
 
+19. **JMH**
+
+    1. Java Microbenchmark Harness
+    2. 2013年首发
+       1. 由JIT的开发人员开发
+       2. 归于OpenJDK
     
+20. **Disruptor**
+
+    1. introduction - 介绍
+       1. disruptor - 分裂、瓦解
+       2. 一个线程中每秒处理600万订单
+       3. 2011年的Duke奖  <!--最优秀的框架奖-->
+       4. 速度最快的MQ
+       5. 性能极高，无锁cas，单机支持高并发
